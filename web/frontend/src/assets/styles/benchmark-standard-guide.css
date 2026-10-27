@@ -1,0 +1,124 @@
+.standard-guide-drawer__body {
+  color: var(--text-primary, #1a1a1a);
+  font-size: 14px;
+  line-height: 1.65;
+  padding-bottom: 24px;
+}
+
+.standard-guide-drawer__body h1 {
+  display: none;
+}
+
+.standard-guide-drawer__body h2 {
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(21, 101, 192, 0.16);
+  color: #0d47a1;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.standard-guide-drawer__body h3 {
+  margin: 20px 0 8px;
+  color: #1565c0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.standard-guide-drawer__body h4 {
+  margin: 16px 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.standard-guide-drawer__body p,
+.standard-guide-drawer__body ul,
+.standard-guide-drawer__body ol {
+  margin: 0 0 12px;
+}
+
+.standard-guide-drawer__body ul,
+.standard-guide-drawer__body ol {
+  padding-left: 1.4em;
+}
+
+.standard-guide-drawer__body li + li {
+  margin-top: 4px;
+}
+
+.standard-guide-drawer__body hr {
+  margin: 24px 0;
+  border: none;
+  border-top: 1px dashed rgba(21, 101, 192, 0.2);
+}
+
+.standard-guide-drawer__body table {
+  width: 100%;
+  margin: 12px 0 16px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.standard-guide-drawer__body th,
+.standard-guide-drawer__body td {
+  padding: 8px 10px;
+  border: 1px solid rgba(21, 101, 192, 0.14);
+  text-align: left;
+  vertical-align: top;
+}
+
+.standard-guide-drawer__body th {
+  background: rgba(13, 71, 161, 0.06);
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.standard-guide-drawer__body code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(13, 71, 161, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.standard-guide-drawer__body pre {
+  margin: 12px 0 16px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: rgba(13, 71, 161, 0.05);
+}
+
+.standard-guide-drawer__body pre code {
+  padding: 0;
+  background: transparent;
+  font-size: 12px;
+}
+
+.standard-guide-drawer__body strong {
+  color: #0d47a1;
+}
+
+.standard-guide-drawer__body blockquote {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border-left: 3px solid rgba(21, 101, 192, 0.45);
+  background: rgba(13, 71, 161, 0.05);
+  color: #1565c0;
+}
+
+.standard-guide-drawer__body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .standard-guide-drawer__body {
+    font-size: 13px;
+  }
+
+  .standard-guide-drawer__body table {
+    display: block;
+    overflow-x: auto;
+  }
+}

@@ -1,0 +1,336 @@
+.topic1-evaluation {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.topic1-evaluation__header,
+.topic1-config-card__main,
+.topic1-evidence-card__header,
+.section-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.topic1-evaluation h2,
+.topic1-evaluation h3 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.topic1-evaluation h2 {
+  font-size: 22px;
+}
+
+.topic1-evaluation p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.section-kicker {
+  display: block;
+  margin-bottom: 7px;
+  color: #00796b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.topic1-status-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.source-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(21, 101, 192, 0.1);
+  color: var(--accent-blue);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.source-pill.is-valueqa {
+  background: rgba(0, 121, 107, 0.12);
+  color: #00796b;
+}
+
+.source-pill.is-warning {
+  background: rgba(251, 140, 0, 0.12);
+  color: #b86600;
+}
+
+.source-pill.is-muted {
+  background: rgba(91, 107, 125, 0.12);
+  color: var(--text-secondary);
+}
+
+.topic1-config-card,
+.topic1-evidence-card,
+.topic1-subsection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topic1-config-card,
+.topic1-evidence-card {
+  padding: 14px;
+  border: 1px solid #dbe5f1;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.topic1-config-grid,
+.topic1-metric-notes,
+.topic1-value-grid,
+.topic1-evidence-grid,
+.topic1-sample-entry-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.topic1-config-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.topic1-metric-notes,
+.topic1-value-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.topic1-evidence-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.topic1-sample-entry-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.topic1-config-grid article,
+.topic1-metric-notes article,
+.topic1-value-grid article,
+.topic1-evidence-grid article,
+.topic1-sample-entry-grid article {
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #dbe5f1;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.topic1-config-grid span,
+.topic1-evidence-grid span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.topic1-config-grid strong,
+.topic1-evidence-grid strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-primary);
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.topic1-config-grid p,
+.topic1-metric-notes span,
+.topic1-value-grid p,
+.topic1-sample-entry-grid p {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.topic1-metric-notes b,
+.topic1-value-grid b,
+.topic1-sample-entry-grid b {
+  display: block;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.topic1-baseline-layout,
+.topic1-distribution-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: 12px;
+}
+
+.topic1-score-placeholder,
+.topic1-baseline-table,
+.topic1-distribution-grid article,
+.topic1-issue-panel {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #dbe5f1;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.topic1-placeholder-bars {
+  display: flex;
+  height: 180px;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.topic1-placeholder-bars span {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  align-items: flex-end;
+}
+
+.topic1-placeholder-bars i {
+  display: block;
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: rgba(21, 101, 192, 0.22);
+}
+
+.topic1-baseline-table {
+  overflow-x: auto;
+}
+
+.topic1-baseline-row {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.2fr) 90px 110px 120px;
+  gap: 10px;
+  min-width: 560px;
+  padding: 10px 0;
+  border-top: 1px solid #edf2f7;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.topic1-baseline-row:first-child {
+  border-top: 0;
+}
+
+.topic1-baseline-row.is-head {
+  color: var(--text-secondary);
+  font-weight: 800;
+}
+
+.topic1-baseline-row b,
+.topic1-baseline-row small {
+  display: block;
+}
+
+.topic1-baseline-row small {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.topic1-state {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.topic1-distribution-grid article > b,
+.topic1-issue-panel b {
+  display: block;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.topic1-distribution-bars,
+.topic1-issue-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.topic1-distribution-bars div,
+.topic1-issue-bars div {
+  display: grid;
+  grid-template-columns: 88px minmax(120px, 1fr) 44px;
+  gap: 10px;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.topic1-distribution-bars i,
+.topic1-issue-bars i {
+  display: block;
+  height: 9px;
+  border-radius: 999px;
+  background: #00796b;
+}
+
+.topic1-issue-bars i {
+  background: #6b8bbd;
+}
+
+.topic1-distribution-bars b,
+.topic1-issue-bars b {
+  color: var(--text-primary);
+  text-align: right;
+}
+
+@media (max-width: 1180px) {
+  .topic1-config-grid,
+  .topic1-metric-notes,
+  .topic1-value-grid,
+  .topic1-evidence-grid,
+  .topic1-sample-entry-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topic1-baseline-layout,
+  .topic1-distribution-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .topic1-evaluation__header,
+  .topic1-config-card__main,
+  .topic1-evidence-card__header,
+  .section-title-row {
+    flex-direction: column;
+  }
+
+  .topic1-status-tags {
+    justify-content: flex-start;
+  }
+
+  .topic1-config-grid,
+  .topic1-metric-notes,
+  .topic1-value-grid,
+  .topic1-evidence-grid,
+  .topic1-sample-entry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topic1-distribution-bars div,
+  .topic1-issue-bars div {
+    grid-template-columns: 1fr;
+  }
+
+  .topic1-distribution-bars b,
+  .topic1-issue-bars b {
+    text-align: left;
+  }
+}

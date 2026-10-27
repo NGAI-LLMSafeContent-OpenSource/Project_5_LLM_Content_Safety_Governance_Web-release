@@ -1,0 +1,73 @@
+{
+  "name": "content-safety-platform",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "基于数据价值的内容安全治理平台 - 前端工程",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "test:benchmark-resource": "node --import tsx --test src/utils/benchmark/__tests__/benchmarkAssetRoute.test.mjs src/utils/benchmark/__tests__/benchmarkResourceTelemetry.test.mjs && node src/utils/__tests__/benchmark-asset-resource.smoke.mjs && node src/utils/__tests__/benchmark-topic3-risk-version.smoke.mjs && node --import tsx src/utils/__tests__/governance-cbrne.smoke.mjs",
+    "test:governance-smoke": "node --import tsx --test src/utils/__tests__/governance-session-wait.smoke.mjs src/utils/__tests__/governance-shell.smoke.mjs",
+    "lint": "eslint \"src/**/*.{ts,vue}\" env.d.ts vite.config.ts --fix",
+    "lint:check": "eslint \"src/**/*.{ts,vue}\" env.d.ts vite.config.ts --max-warnings=0",
+    "format": "prettier --write \"src/**/*.{ts,vue,css}\" \"*.{json,yml,yaml}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,vue,css}\" \"*.{json,yml,yaml}\"",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/!(*.d).{ts,vue}": [
+      "prettier --write --ignore-path .prettierignore.staged",
+      "eslint --fix --max-warnings=0 --ignore-path .eslintignore.staged"
+    ],
+    "src/**/*.d.ts": [
+      "prettier --write --ignore-path .prettierignore.staged"
+    ],
+    "src/**/*.css": [
+      "prettier --write --ignore-path .prettierignore.staged"
+    ],
+    "*.{json,yml,yaml}": [
+      "prettier --write --ignore-path .prettierignore.staged"
+    ],
+    "env.d.ts": [
+      "prettier --write --ignore-path .prettierignore.staged",
+      "eslint --fix --max-warnings=0 --ignore-path .eslintignore.staged"
+    ],
+    "vite.config.ts": [
+      "prettier --write --ignore-path .prettierignore.staged",
+      "eslint --fix --max-warnings=0 --ignore-path .eslintignore.staged"
+    ]
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.2",
+    "@vue/shared": "3.5.34",
+    "axios": "^1.7.0",
+    "echarts": "^5.5.0",
+    "element-plus": "^2.8.0",
+    "marked": "^18.0.9",
+    "pinia": "^2.1.0",
+    "vis-network": "9.1.9",
+    "vue": "^3.4.0",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.4.0",
+    "unplugin-auto-import": "^0.17.0",
+    "unplugin-vue-components": "^0.26.0",
+    "vite": "^5.4.0",
+    "vue-eslint-parser": "9.4.3",
+    "vue-tsc": "^2.2.0"
+  }
+}

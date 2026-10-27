@@ -1,0 +1,181 @@
+/* ============================================================
+   Output wizard — output-specific styles only.
+   Shared base styles are in wizard-shared.css.
+   ============================================================ */
+
+#page-output {
+  color: #26384d;
+  font-size: 13px;
+}
+
+/* ---- flow layout: 3-column grid (left shared / tracks / right shared) ---- */
+#page-output .wizard-flow {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+}
+
+/* align nav side padding with input side (24px) */
+#page-output .wizard-steps-shared {
+  padding-left: 24px;
+}
+
+#page-output .wizard-steps--shared--right {
+  padding-right: 24px;
+}
+
+/* ---- track colour overrides ---- */
+#page-output .wizard-track--diversity .track-title {
+  background: rgba(92, 77, 122, 0.12);
+  color: #5c4d7a;
+}
+
+#page-output .wizard-track--risk .track-title {
+  background: rgba(21, 101, 192, 0.1);
+  color: var(--accent-blue);
+}
+
+#page-output .wizard-track--diversity .wizard-step.active {
+  color: #5c4d7a;
+}
+
+#page-output .wizard-track--diversity .wizard-step.active .wizard-step-num {
+  background: #5c4d7a;
+}
+
+#page-output .wizard-track--risk .wizard-step.active .wizard-step-num {
+  background: var(--accent-blue);
+}
+
+/* ---- output-only navigation elements ---- */
+
+#page-output .wizard-track-label {
+  flex-basis: 128px;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+#page-output .wizard-track-label::after {
+  content: '';
+  border: 5px solid transparent;
+  border-left-color: #8fa1b5;
+  flex: 0 0 auto;
+}
+
+#page-output .wizard-track--diversity .wizard-track-label::after {
+  border-left-color: #5c4d7a;
+}
+
+#page-output .wizard-track--risk .wizard-track-label::after {
+  border-left-color: var(--accent-blue);
+}
+
+#page-output .wizard-step {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#page-output .wizard-step::after {
+  border-left-color: #8fa1b5;
+}
+
+#page-output .wizard-track--diversity .wizard-step::after {
+  border-left-color: #5c4d7a;
+}
+
+#page-output .wizard-track--risk .wizard-step::after {
+  border-left-color: var(--accent-blue);
+}
+
+#page-output .wizard-step .wizard-step-num + span,
+#page-output .wizard-step .wizard-step-num + div {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#page-output .wizard-steps--shared--right {
+  padding: 0 24px 0 0;
+  border-right: none;
+  border-left: 1px dashed var(--border-color);
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+#page-output .wizard-track--inactive {
+  opacity: 0.45;
+}
+
+/* Track step area: fixed-width layout (output has 4 steps per track) */
+#page-output .wizard-steps--track {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0;
+  min-width: 0;
+  overflow-x: visible;
+}
+
+#page-output .wizard-steps--shared .wizard-step {
+  flex: none;
+}
+#page-output .wizard-steps--shared .wizard-step::after {
+  display: none;
+}
+
+/* Track steps use shared .wizard-step { flex: 1 1 0 } for even distribution */
+
+/* ---- stage panel ---- */
+#page-output .output-stage-section {
+  border: 1px solid #d0d9e5;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fafcff;
+}
+
+#page-output .output-stage-section + .output-stage-section {
+  margin-top: 10px;
+}
+
+#page-output .output-stage-section__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+  color: #36506b;
+}
+
+/* ---- wizard footer (output-only) ---- */
+#page-output .wizard-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+#page-output .wizard-footer .el-button:last-child {
+  margin-left: auto;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 768px) {
+  #page-output .wizard-steps-shared {
+    padding-left: 12px;
+  }
+  #page-output .wizard-steps--shared--right {
+    padding-right: 12px;
+  }
+  #page-output .wizard-track-label {
+    flex-basis: 104px;
+    font-size: 14px;
+  }
+  #page-output .wizard-step,
+  #page-output .wizard-step .wizard-step-num + span,
+  #page-output .wizard-step .wizard-step-num + div {
+    font-size: 13px;
+  }
+}
+
+/* ---- content area spacing (matching input side: no wizard-body padding, stage-section handles it) ---- */

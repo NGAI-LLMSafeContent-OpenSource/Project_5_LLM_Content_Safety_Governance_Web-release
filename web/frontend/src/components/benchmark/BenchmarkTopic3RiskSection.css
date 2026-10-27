@@ -1,0 +1,359 @@
+.topic3-risk-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.topic3-risk-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topic3-risk-section__header h4 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.topic3-risk-section__header p {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.topic3-risk-section__state {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.version-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.version-toolbar__field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.version-toolbar__field select {
+  min-width: 220px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.version-toolbar__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.version-toolbar__history {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-blue);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.identity-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.identity-facts > div {
+  min-width: 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--bg-secondary);
+}
+
+.identity-facts dt {
+  margin-bottom: 4px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.identity-facts dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.risk-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+  gap: 14px;
+}
+
+.risk-overview__block {
+  padding: 12px;
+  border: 1px solid #e2edf8;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.risk-overview__block b {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.risk-overview__empty {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #dbe5f1;
+}
+
+.level-card span {
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.level-card strong {
+  color: var(--text-primary);
+  font-size: 18px;
+}
+
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.language-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #dbe5f1;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.language-list strong {
+  color: var(--text-primary);
+}
+
+.risk-category {
+  padding: 12px;
+  border: 1px solid #e2edf8;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.risk-category summary {
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #dbe5f1;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.category-list strong {
+  color: var(--text-primary);
+}
+
+.evaluation-panel {
+  padding: 14px;
+  border: 1px solid #e2edf8;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.evaluation-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.evaluation-panel__header b {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+.evaluation-panel__header p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.primary-result {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.primary-result h5 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.primary-result p {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.primary-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.primary-metrics > div {
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #dbe5f1;
+}
+
+.primary-metrics span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.primary-metrics strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.baseline-message,
+.result-identity {
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.result-identity {
+  color: var(--text-muted);
+}
+
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-actions__note {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .identity-facts,
+  .risk-overview,
+  .primary-result {
+    grid-template-columns: 1fr;
+  }
+
+  .primary-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .topic3-risk-section__header,
+  .evaluation-panel__header {
+    flex-direction: column;
+  }
+
+  .level-grid,
+  .primary-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .version-toolbar__field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .version-toolbar__field select {
+    width: 100%;
+    min-width: 0;
+  }
+}

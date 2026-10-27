@@ -1,0 +1,67 @@
+/* ============================================================
+   Output-side shared component styles
+   Imported globally in OutputView.vue (non-scoped).
+
+   These are utility/layout primitives used across multiple
+   output wizard steps.  Component-specific styles stay in
+   their co-located .css files (scoped).
+   ============================================================ */
+
+/* ---- Risk-level semantic color utilities ---- */
+.out-risk-high,
+.out-risk-red {
+  color: var(--accent-red);
+}
+.out-risk-medium,
+.out-risk-orange {
+  color: var(--accent-orange);
+}
+.out-risk-low,
+.out-risk-blue {
+  color: var(--accent-blue);
+}
+.out-risk-safe,
+.out-risk-green {
+  color: var(--accent-green);
+}
+
+/* subtle bg variants */
+.out-bg-red {
+  background: rgba(198, 40, 40, 0.08);
+}
+.out-bg-orange {
+  background: rgba(230, 81, 0, 0.08);
+}
+.out-bg-blue {
+  background: rgba(21, 101, 192, 0.06);
+}
+.out-bg-green {
+  background: rgba(46, 125, 50, 0.08);
+}
+
+/* ---- Section title (shared pattern across all output steps) ---- */
+.out-section-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 18px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-primary);
+}
+.out-section-title small {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* ---- Notice / info banner ---- */
+.out-notice {
+  border: 1px solid #ffd89a;
+  background: #fff8e8;
+  color: #7a4b00;
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 12px;
+}

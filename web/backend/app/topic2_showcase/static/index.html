@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>课题二成果展示</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div id="app" class="showcase-app">
+      <header class="showcase-header">
+        <div class="showcase-header__text">
+          <p class="showcase-header__eyebrow">课题二 · 成果展示</p>
+          <h1 id="showcase-title">课题二：动态 Benchmark 与异常样本生命周期</h1>
+          <p id="showcase-subtitle" class="showcase-header__subtitle">
+            加载展示数据中…
+          </p>
+        </div>
+        <div id="mode-badge" class="mode-badge" hidden></div>
+      </header>
+
+      <nav id="tab-nav" class="tab-nav" aria-label="成果展示页签"></nav>
+
+      <main class="showcase-main">
+        <section id="panel-overview" class="panel"></section>
+        <section id="panel-dynbench" class="panel panel--hidden"></section>
+        <section id="panel-cbrne" class="panel panel--hidden"></section>
+        <section id="panel-explicit" class="panel panel--hidden"></section>
+      </main>
+
+      <div id="lifecycle-viewer" class="lifecycle-viewer panel--hidden">
+        <div class="lifecycle-viewer__bar">
+          <button type="button" id="lifecycle-back" class="btn btn-secondary">
+            ← 返回成果展示
+          </button>
+          <span id="lifecycle-viewer-title" class="lifecycle-viewer__title"></span>
+        </div>
+        <iframe
+          id="lifecycle-frame"
+          class="lifecycle-viewer__frame"
+          title="生命周期案例"
+        ></iframe>
+      </div>
+
+      <div id="showcase-error" class="showcase-error panel--hidden"></div>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
