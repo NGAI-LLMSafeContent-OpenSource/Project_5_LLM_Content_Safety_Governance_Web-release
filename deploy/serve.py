@@ -35,6 +35,20 @@ class Frontend(StaticFiles):
             return await super().get_response("index.html", scope)
 
 
+class HttpMethodOverride:
+    """Function Compute allows GET/POST; preserve normal API route permissions."""
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http" and scope["method"] == "POST" and scope["path"].startswith("/api/"):
+            method = dict(scope.get("headers", [])).get(b"x-http-method-override", b"").upper()
+            if method in {b"PUT", b"PATCH", b"DELETE"}:
+                scope = dict(scope, method=method.decode("ascii"))
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(HttpMethodOverride)
 app.mount("/", Frontend(directory=ROOT / "web/frontend/dist", html=True), name="frontend")
 
 if __name__ == "__main__":

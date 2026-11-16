@@ -46,6 +46,15 @@ const http = axios.create({
 
 // 请求拦截器：附加 Token 等
 http.interceptors.request.use((config) => {
+  // Studio's gateway only accepts GET/POST; the deployment entry restores the
+  // original API method before routing and its existing authorization checks.
+  if (import.meta.env.VITE_HTTP_METHOD_OVERRIDE === 'true') {
+    const method = (config.method || 'get').toUpperCase()
+    if (['PUT', 'PATCH', 'DELETE'].includes(method)) {
+      config.headers.set('X-HTTP-Method-Override', method)
+      config.method = 'post'
+    }
+  }
   // TODO: 从 auth store 获取 token 附加到 header
   return config
 })

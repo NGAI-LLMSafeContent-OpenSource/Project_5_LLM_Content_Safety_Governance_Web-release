@@ -4,7 +4,7 @@ RUN npm install --global pnpm@9.15.9
 COPY web/frontend/ web/frontend/
 COPY docs/guides/ docs/guides/
 WORKDIR /build/web/frontend
-ENV VITE_API_BASE_URL=/api VITE_USE_MOCK=false
+ENV VITE_API_BASE_URL=/api VITE_USE_MOCK=false VITE_HTTP_METHOD_OVERRIDE=true
 RUN pnpm install --frozen-lockfile --ignore-scripts && pnpm build
 
 FROM python:3.11-slim-bookworm

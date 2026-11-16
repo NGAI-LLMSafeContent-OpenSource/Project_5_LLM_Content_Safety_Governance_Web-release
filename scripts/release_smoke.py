@@ -27,6 +27,7 @@ def main():
             raise RuntimeError('Missing '+tool+'; install Node.js 20/22 and pnpm 9 first')
     # No inherited application configuration, model keys or development import paths.
     env = {k:v for k,v in os.environ.items() if k in ['PATH','HOME','SYSTEMROOT','SystemRoot','WINDIR','TEMP','TMP','LANG','LC_ALL','SSL_CERT_FILE','SSL_CERT_DIR']}
+    env['VITE_HTTP_METHOD_OVERRIDE']='true'
     def run(argv, cwd=ROOT):
         subprocess.run([str(x) for x in argv],cwd=cwd,env=env,check=True,timeout=900)
     with tempfile.TemporaryDirectory(prefix='topic5-release-smoke-') as tmp:
@@ -87,6 +88,16 @@ def main():
                 for path in ['/', '/governance', '/studio/deep/link']:
                     with LOCAL_HTTP.open(f'http://127.0.0.1:{port}'+path,timeout=5) as response:
                         assert response.status==200 and b'/assets/' in response.read(),path
+                headers={'Content-Type':'application/json','X-Governance-Client-Id':str(__import__('uuid').uuid4())}
+                url=f'http://127.0.0.1:{port}/api/governance/sessions'
+                req=urllib.request.Request(url,data=json.dumps({'domain':'input','prompt':'查看价值语料'}).encode(),headers=headers)
+                with LOCAL_HTTP.open(req,timeout=10) as response:session_id=json.load(response)['data']['session_id']
+                delete_headers=dict(headers,**{'X-HTTP-Method-Override':'DELETE'})
+                req=urllib.request.Request(url+'/'+session_id,data=b'',headers=delete_headers,method='POST')
+                with LOCAL_HTTP.open(req,timeout=10) as response:assert response.status==200
+                try:LOCAL_HTTP.open(urllib.request.Request(url+'/'+session_id,headers=headers),timeout=10)
+                except urllib.error.HTTPError as exc:assert exc.code==404
+                else:raise RuntimeError('Method override did not delete the session')
                 for path in ['/api/no-such-endpoint','/assets/missing.js']:
                     try:LOCAL_HTTP.open(f'http://127.0.0.1:{port}'+path,timeout=5)
                     except urllib.error.HTTPError as exc:assert exc.code==404

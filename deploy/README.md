@@ -7,3 +7,5 @@
 默认使用 stub 与关键词检测，无需模型密钥；跨课题服务需独立部署并配置地址。数据库、任务产物位于 /mnt/workspace/topic5-web，可通过 STUDIO_DATA_DIR 配置。平台重建、迁移与持久化条件需自行核验；重要资料另做备份。不要把真实 .env、数据库或 API 密钥写入 Git；密钥使用 Studio Secrets。
 
 先通过发布脚本更新 GitHub release/1.0，再同步所有平台；触发部署前核对实际构建分支与提交。检查构建日志、运行日志、首页、页面刷新、/health 与治理会话流程。
+
+ModelScope 网关仅接受 GET/POST；Docker 前端构建启用 VITE_HTTP_METHOD_OVERRIDE，PUT/PATCH/DELETE 通过带 X-HTTP-Method-Override 的 POST 传输，部署入口在原路由权限检查前恢复方法。普通本地前端默认不启用。

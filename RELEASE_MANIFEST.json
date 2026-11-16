@@ -16,7 +16,7 @@
     },
     "Dockerfile": {
       "mode": "100644",
-      "sha256": "83b04fae2205b8ecf79ec0217c6b3fc2d2b8a8a53ade421384f30067514e8b0a"
+      "sha256": "99e54cf591991b5b0057b6a87101b301451b4e66f9c9eb7735f8ddde97109e0a"
     },
     "LICENSE": {
       "mode": "100644",
@@ -32,11 +32,11 @@
     },
     "deploy/README.md": {
       "mode": "100644",
-      "sha256": "bb688dfd9002356ac4bf6f3c356ec5d5071917c12aaed2fbeda1623eca457d01"
+      "sha256": "06d0470f4b61ef7c59d16a315c585ccb337d0c57360f2e9f07da3be9486f5f5c"
     },
     "deploy/serve.py": {
       "mode": "100644",
-      "sha256": "0e7f75d636b3ef4fe83a7a02e179ab6f26c112005653e98b0ae0ab36e033adbb"
+      "sha256": "ec6809f76a108887b405358ca311b8670d4a51fca1f0a1c0a092c47544ed3b30"
     },
     "docs/guides/动态Benchmark-标准模式使用说明.md": {
       "mode": "100644",
@@ -44,7 +44,7 @@
     },
     "scripts/release_smoke.py": {
       "mode": "100644",
-      "sha256": "6a614a92e0b6dfdc06f5b42152337409e503a3adf22c73b13703e73f18a7188e"
+      "sha256": "5706bee4f738cc2337a505b263b6ee208655be99079404d35ece5c779415c684"
     },
     "web/backend/.env.example": {
       "mode": "100644",
@@ -824,7 +824,7 @@
     },
     "web/frontend/env.d.ts": {
       "mode": "100644",
-      "sha256": "8cd596f826ffd7b99289890ee37261ad731939ef1a44710aba41f9643ed7892a"
+      "sha256": "6ba39134ff10aa0aaa438aa86117b97b040783a7a340f71f3c684b45cb6c0e64"
     },
     "web/frontend/index.html": {
       "mode": "100644",
@@ -872,7 +872,7 @@
     },
     "web/frontend/src/api/request.ts": {
       "mode": "100644",
-      "sha256": "091e1d4a92014b675b454fe30251757efdeca2fa913f5576b62308d59ed3e70e"
+      "sha256": "1e920e484a0e2b35201098056d3ae38d4d9d03e162c53435a45f703eb4d523f0"
     },
     "web/frontend/src/assets/styles/benchmark-standard-guide.css": {
       "mode": "100644",
