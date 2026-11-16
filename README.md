@@ -50,3 +50,7 @@ python3 scripts/release_smoke.py
 本包不含Docker任务、医学样例、内部文档、完整数据集、模型或预跑产物，空资源列表属于初始状态。跨课题数据默认不自动扫描或导入；只有明确配置路径后才可启用对应能力。
 
 依赖清单见web/backend/requirements.txt及web/frontend/package.json/pnpm-lock.yaml。第三方组件说明见THIRD_PARTY_NOTICES.md；源Commit、覆盖后的文件哈希及测试命令见RELEASE_MANIFEST.json与SHA256SUMS。
+
+## ModelScope 在线应用
+
+部署适配与本地启动方式见 [deploy/README.md](deploy/README.md)。部署文件已纳入统一发布源码，在线服务需另外构建和启动。

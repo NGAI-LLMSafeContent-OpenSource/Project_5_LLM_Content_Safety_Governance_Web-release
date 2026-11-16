@@ -10,17 +10,33 @@
     "passed": true
   },
   "files": {
+    ".dockerignore": {
+      "mode": "100644",
+      "sha256": "e6434861a53d44b9bbf036e2558a9b58eddb03596e966ab560e093e08828ec84"
+    },
+    "Dockerfile": {
+      "mode": "100644",
+      "sha256": "83b04fae2205b8ecf79ec0217c6b3fc2d2b8a8a53ade421384f30067514e8b0a"
+    },
     "LICENSE": {
       "mode": "100644",
       "sha256": "bf09923210a8186467c43b56946a7726e95850c172077106038be441a40c5776"
     },
     "README.md": {
       "mode": "100644",
-      "sha256": "7bad4e6273c8ff790ef30e96d9cd635594956bb6faa605f6747c38bc3db4a7c2"
+      "sha256": "477763f87f3ba7d97693b851d14dd2e5401aa7704082de61f81735140b0fb173"
     },
     "THIRD_PARTY_NOTICES.md": {
       "mode": "100644",
       "sha256": "4465e8d2a6b088fa16b6d34c9ff6727f982c648b77254f61a12d0af87b9bf334"
+    },
+    "deploy/README.md": {
+      "mode": "100644",
+      "sha256": "bb688dfd9002356ac4bf6f3c356ec5d5071917c12aaed2fbeda1623eca457d01"
+    },
+    "deploy/serve.py": {
+      "mode": "100644",
+      "sha256": "0e7f75d636b3ef4fe83a7a02e179ab6f26c112005653e98b0ae0ab36e033adbb"
     },
     "docs/guides/动态Benchmark-标准模式使用说明.md": {
       "mode": "100644",
@@ -28,7 +44,7 @@
     },
     "scripts/release_smoke.py": {
       "mode": "100644",
-      "sha256": "46a156360072ed5b23eae99b5c7f15cb547cfefb4d57a07f3da850aab101bbb5"
+      "sha256": "6a614a92e0b6dfdc06f5b42152337409e503a3adf22c73b13703e73f18a7188e"
     },
     "web/backend/.env.example": {
       "mode": "100644",
@@ -1966,5 +1982,5 @@
   "project": "NGAI-LLMSafeContent/Project_5_LLM_Content_Safety_Governance_Web",
   "schema": 1,
   "source_commit": "1ada9b6e4487a7e3cecb7bf19213e1335df8bd37",
-  "whitelist_sha256": "077fe3622d45f771b98af41abb85eb4c146a0e007397b8793def7c0d4b5b2d1c"
+  "whitelist_sha256": "b3c30f4c7ba4857a35d09a3e5f2971c7586d6d3bbe1ea0f415d3085b33b3a103"
 }

@@ -12,6 +12,7 @@ import tempfile
 import threading
 import time
 import urllib.request
+import urllib.error
 import venv
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +69,32 @@ def main():
                 if response.status!=200 or '<html' not in html.lower() or '/assets/' not in html:
                     raise RuntimeError('Built frontend page check failed')
         finally:server.shutdown();server.server_close();thread.join(timeout=5)
+        # Exercise the exact production entry, including SPA refresh and 404 boundaries.
+        with socket.socket() as probe:
+            probe.bind(('127.0.0.1',0));port=probe.getsockname()[1]
+        deploy_env=dict(service_env,PORT=str(port),STUDIO_DATA_DIR=str(tmp/'studio-data'))
+        with (tmp/'production.log').open('w+b') as log:
+            process=subprocess.Popen([str(python),'-B',str(ROOT/'deploy/serve.py')],cwd=ROOT,env=deploy_env,stdout=log,stderr=log)
+            try:
+                deadline=time.monotonic()+45
+                while time.monotonic()<deadline and process.poll() is None:
+                    try:
+                        with LOCAL_HTTP.open(f'http://127.0.0.1:{port}/health',timeout=1) as response:
+                            if json.load(response).get('data',{}).get('status')=='ok':break
+                    except OSError:time.sleep(.2)
+                else:
+                    log.seek(0);raise RuntimeError('Production entry failed: '+log.read().decode(errors='replace')[-4000:])
+                for path in ['/', '/governance', '/studio/deep/link']:
+                    with LOCAL_HTTP.open(f'http://127.0.0.1:{port}'+path,timeout=5) as response:
+                        assert response.status==200 and b'/assets/' in response.read(),path
+                for path in ['/api/no-such-endpoint','/assets/missing.js']:
+                    try:LOCAL_HTTP.open(f'http://127.0.0.1:{port}'+path,timeout=5)
+                    except urllib.error.HTTPError as exc:assert exc.code==404
+                    else:raise RuntimeError('Missing endpoint became HTML: '+path)
+            finally:
+                process.terminate()
+                try:process.wait(timeout=10)
+                except subprocess.TimeoutExpired:process.kill();process.wait()
         print(json.dumps({'passed':True,'backend':'pytest plus empty-database HTTP health','frontend':'frozen install, production build and HTTP page'},ensure_ascii=False))
 
 if __name__=='__main__':main()
