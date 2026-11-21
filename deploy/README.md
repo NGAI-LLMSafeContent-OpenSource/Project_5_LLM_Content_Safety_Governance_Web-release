@@ -8,4 +8,10 @@
 
 先通过发布脚本更新 GitHub release/1.0，再同步所有平台；触发部署前核对实际构建分支与提交。检查构建日志、运行日志、首页、页面刷新、/health 与治理会话流程。
 
-ModelScope 网关仅接受 GET/POST；Docker 前端构建启用 VITE_HTTP_METHOD_OVERRIDE，PUT/PATCH/DELETE 通过带 X-HTTP-Method-Override 的 POST 传输，部署入口在原路由权限检查前恢复方法。普通本地前端默认不启用。
+## 当前部署入口的范围
+
+此Docker入口启动API和静态前端，默认stub及关闭技能运行是离线演示配置，不代表完整治理任务已执行。使用真实治理功能时，按原后端README启用实际Provider，并用独立进程或部署编排运行 `python -m app.workers.governance_task_worker`；Worker与API须使用相同DATABASE_URL、资产目录和上游配置。当前Docker CMD不会自动启动Worker。
+
+当前Studio网关曾拒绝原生DELETE请求。`deploy/serve.py` 可以处理带X-HTTP-Method-Override头的POST，但本发布已恢复原仓前端源码；原前端不再因VITE_HTTP_METHOD_OVERRIDE构建变量而自动转换请求。因此，不能据此宣称该网关下的删除等操作已通过。需要在独立部署层解决传输限制，或使用支持原生HTTP方法的部署环境；不要只修改某个平台的release源码。
+
+本轮只同步release/1.0文件，未主动触发线上重建。完整模型/跨课题、后台Worker、持久化及网关方法兼容均需在所选实际环境另行验收。

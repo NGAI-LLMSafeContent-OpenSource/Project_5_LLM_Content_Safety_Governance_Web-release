@@ -15,3 +15,7 @@
 ## 问题处理
 
 请将错误与复现条件提交至公开仓Issues，由原仓维护者处理。发布分支仅同步审核后的源码和说明，其他平台不单独修改实现。
+
+## Docker入口与后台Worker
+
+现有 `deploy/serve.py` / Docker CMD只启动API和静态UI，默认使用stub且技能运行关闭。完整治理任务需要独立 `app.workers.governance_task_worker` 进程，并与API共享数据库、目录及实际Provider配置；本轮没有把该部署入口当作完整线上治理验收。原前端已恢复，不会自动消费VITE_HTTP_METHOD_OVERRIDE变量；具体限制见deploy/README.md。

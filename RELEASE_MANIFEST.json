@@ -28,7 +28,7 @@
     },
     "KNOWN_ISSUES.md": {
       "mode": "100644",
-      "sha256": "40e6b2df6c9de2ed3aa04150dbaf04aa2a6320dd4b4252f7f0d2b03ac283b13c"
+      "sha256": "13404e39d7b8a5b0e6d979754d7e95e1cf51fdae2cf5e996ab31c745d5b51b95"
     },
     "LICENSE": {
       "mode": "100644",
@@ -52,7 +52,7 @@
     },
     "deploy/README.md": {
       "mode": "100644",
-      "sha256": "06d0470f4b61ef7c59d16a315c585ccb337d0c57360f2e9f07da3be9486f5f5c"
+      "sha256": "bae735fbee64f359009a36eeec4d1b0e3eeb637ab851a172f35c7b5dfddbb8b7"
     },
     "deploy/serve.py": {
       "mode": "100644",
