@@ -140,6 +140,7 @@ def _render_html(report: dict[str, Any]) -> str:
     limitations = envelope.get("limitations") or []
     primary = report.get("primary_evaluator") or {}
     baseline = report.get("baseline_evaluator") or {}
+    baseline_available = bool(baseline)
 
     def status_row(key: str) -> str:
         item = envelope.get(key) or {}
@@ -174,6 +175,18 @@ def _render_html(report: dict[str, Any]) -> str:
     boundaries = "".join(f"<li>{html.escape(str(item))}</li>" for item in claim_boundaries)
     limits = "".join(f"<li>{html.escape(str(item))}</li>" for item in limitations)
     evaluated = envelope.get("evaluated_object") or {}
+    comparison_note = (
+        "Base 不进入正式问题清单"
+        if baseline_available
+        else "本版本暂无同版本基线"
+    )
+    baseline_row = (
+        "<tr><td>Base 基线（baseline，仅对照）</td>"
+        f"<td>{html.escape(str(baseline.get('model_id') or ''))}</td>"
+        f"<td>{html.escape(str(baseline.get('run_id') or ''))}</td></tr>"
+        if baseline_available
+        else '<tr><td colspan="3">本版本暂无同版本基线</td></tr>'
+    )
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -189,7 +202,7 @@ def _render_html(report: dict[str, Any]) -> str:
 </head>
 <body>
   <h1>风险识别器交叉核对 · 预跑记录审阅报告</h1>
-  <p class="note">冻结快照 · 不重新读取上游 · 受限导出 · Base 不进入正式问题清单</p>
+  <p class="note">冻结快照 · 不重新读取上游 · 受限导出 · {comparison_note}</p>
   <p>任务 ID：{html.escape(str(report.get('task_id') or ''))}</p>
   <p>评测对象：{html.escape(str(evaluated.get('record_id') or ''))}
     （版本 {html.escape(str(evaluated.get('record_version') or '—'))}）</p>
@@ -209,9 +222,7 @@ def _render_html(report: dict[str, Any]) -> str:
       <tr><td>V7 正式（primary）</td>
         <td>{html.escape(str(primary.get('model_id') or ''))}</td>
         <td>{html.escape(str(primary.get('run_id') or ''))}</td></tr>
-      <tr><td>Base 基线（baseline，仅对照）</td>
-        <td>{html.escape(str(baseline.get('model_id') or ''))}</td>
-        <td>{html.escape(str(baseline.get('run_id') or ''))}</td></tr>
+      {baseline_row}
     </tbody>
   </table>
   <p class="note">{html.escape(SENSITIVITY_BOUNDARY)}</p>
@@ -303,14 +314,18 @@ def _render_manifest(report: dict[str, Any]) -> dict[str, Any]:
             "run_id": primary.get("run_id")
             or (run_identity.get("primary") or {}).get("run_id"),
         },
-        "baseline_run": {
-            "role": "baseline",
-            "model_id": baseline.get("model_id")
-            or (run_identity.get("baseline") or {}).get("model_id"),
-            "run_id": baseline.get("run_id")
-            or (run_identity.get("baseline") or {}).get("run_id"),
-            "note": "baseline display only; excluded from formal issue lists",
-        },
+        "baseline_run": (
+            {
+                "role": "baseline",
+                "model_id": baseline.get("model_id")
+                or (run_identity.get("baseline") or {}).get("model_id"),
+                "run_id": baseline.get("run_id")
+                or (run_identity.get("baseline") or {}).get("run_id"),
+                "note": "baseline display only; excluded from formal issue lists",
+            }
+            if baseline or run_identity.get("baseline")
+            else None
+        ),
         "source_identity": source_identity,
         "run_identity": run_identity,
         "statuses": statuses,

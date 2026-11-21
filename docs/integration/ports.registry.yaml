@@ -1,0 +1,330 @@
+# 跨课题 Demo 端口注册表 — 单一事实源
+# 维护约定：
+# 1. 修改端口只改本文件，然后运行：node scripts/gen-integration-ports.mjs
+# 2. 各课题仓库通过启动命令 / 环境变量传入端口，默认值应与本表对齐
+# 3. SSH 本机隧道端口 = tunnel_offset + ui_port（例：6006 → 16006，6101 → 16101）
+
+version: 1
+host: 127.0.0.1
+tunnel_offset: 10000
+
+platform:
+  id: project5
+  name: 课题五内容安全治理平台
+  repo: Project_5_LLM_Content_Safety_Governance_Web
+  frontend_port: 5173
+  backend_port: 5800
+  backend_env:
+    APP_PORT: "5800"
+    TOPIC3_DIFFICULTY_BASE_URL: "http://127.0.0.1:6331"
+    TOPIC3_DIFFICULTY_VLLM_API_BASE: "http://127.0.0.1:6332/v1"
+    TOPIC3_RISK_AGENT_URL: "http://127.0.0.1:6351/chat"
+    TOPIC3_RISK_QWEN_API_BASE: "http://127.0.0.1:6332/v1"
+  frontend_proxy_target: "http://127.0.0.1:5800"
+
+systems:
+  - id: topic1-corpus-refinement
+    topic: 1
+    seq: 4
+    name: RefineX 数据提质 API
+    repo: Project_1_Data_Refinement
+    api_port: 6131
+    health_path: /health
+    integration_status: pending
+    runtime:
+      cwd: refinemodel_api
+      args: ["-m", "refinemodel_service"]
+      env:
+        REFINEX_HOST: "127.0.0.1"
+        REFINEX_PORT: "{port}"
+
+  - id: topic1-corpus-detox
+    topic: 1
+    seq: 5
+    name: 数据去毒 API
+    repo: Project_1_Data_Detox
+    api_port: 6141
+    health_path: /health
+    integration_status: pending
+    runtime:
+      cwd: .
+      args: ["-m", "uvicorn", "detox_api.app:app", "--host", "127.0.0.1", "--port", "{port}", "--workers", "1"]
+      env:
+        DETOX_BACKEND: "real"
+
+  - id: topic1-corpus-detection
+    topic: 1
+    seq: 6
+    name: SC-DC-PDD 稀缺度评估 API
+    repo: Project_1_Data_Detection
+    api_port: 6151
+    health_path: /api/health
+    integration_status: pending
+    runtime:
+      cwd: .
+      args: ["-m", "scdc_pdd.service", "--host", "127.0.0.1", "--port", "{port}"]
+
+  - id: topic1-indicator-mining
+    topic: 1
+    seq: 1
+    name: 指标自动挖掘与审校
+    repo: Project_1_Construction_of_Evaluation_System
+    ui_port: 6101
+    api_port: 6102
+    integration_status: ready
+    dual_stack: true
+    legacy_note: 原 topic1-mainstream-value；保留既有 6101/6102 服务和启动方式
+    start:
+      backend:
+        cwd: backend
+        command: python main.py
+        env:
+          APP_RUNTIME_MODE: "integration"
+          APP_PORT: "{api_port}"
+          APP_HOST: "0.0.0.0"
+          POLICY_CRAWL_ENABLED: "false"
+      frontend:
+        cwd: frontend
+        command: npm run dev -- --host 0.0.0.0 --port {ui_port}
+        env:
+          VITE_APP_RUNTIME_MODE: "integration"
+          VITE_UI_PORT: "{ui_port}"
+          VITE_API_PROXY_TARGET: "http://127.0.0.1:{api_port}"
+          VITE_WS_PROXY_TARGET: "ws://127.0.0.1:{api_port}"
+
+  - id: topic1-evobench
+    topic: 1
+    seq: 2
+    name: EvoBench 评估与溯因
+    ui_port: 6111
+    integration_status: pending
+    legacy_note: 暂定由课题一交付独立 Viewer；仓库、启动命令和运行依赖待实物确认
+
+  - id: topic1-semantic-evaluation
+    topic: 1
+    seq: 3
+    name: 语义稀缺与任务关联
+    ui_port: 6121
+    integration_status: pending
+    legacy_note: 暂定由课题一交付独立 Viewer；仓库、启动命令和运行依赖待实物确认
+
+  - id: topic2-dynbench
+    topic: 2
+    seq: 1
+    name: 课题二动态 Benchmark 与异常样本生命周期
+    repo: Project_5_LLM_Content_Safety_Governance_Web
+    source_repo: Project_2_Flywheel_on_Anomaly_Detection_Tracking_Correction
+    ui_port: 6201
+    integration_status: ready
+    legacy_note: DynBench 上游 WebUI 仍运行于 8766，6201 为课题五展示服务
+    start:
+      single:
+        cwd: web/backend
+        command: uvicorn app.topic2_showcase.main:app --host 0.0.0.0 --port {ui_port}
+      upstream:
+        id: topic2-autobench-web
+        repo: Project_2_Flywheel_on_Anomaly_Detection_Tracking_Correction
+        cwd: .
+        command: autobench-web --host 0.0.0.0 --port {ui_port}
+        ui_port: 8766
+        health_path: /api/health
+        webui_path: /agent
+        optional: true
+        expected:
+          status: ok
+          service: autobench-agent
+
+  - id: topic2-filterguard
+    topic: 2
+    seq: 2
+    name: FilterGuard 输入风险 keyword 识别
+    repo: Project_2_Anomaly_Data_Identification
+    ui_port: 6211
+    api_port: 6211
+    health_path: /health
+    method: keyword
+    timeout_seconds: 10
+    integration_status: ready
+    legacy_note: 输入模块风险链路的 FilterGuard keyword 轻量接入；统一启动入口由 start-platform.mjs 管理
+    start:
+      single:
+        cwd: .
+        command: filterguard serve --methods {method} --host 0.0.0.0 --port {api_port} --keyword-extra-wordlist-manifest configs/keyword_external_wordlists.json --keyword-extra-wordlist configs/keyword_zh_core_short.txt --keyword-extra-weight 3
+        optional: true
+        log_path: .project5-filterguard.log
+
+  - id: topic2-flywheel
+    topic: 2
+    seq: 3
+    name: 异常检测跟踪纠正飞轮
+    repo: Project_2_Flywheel_on_Anomaly_Detection_Tracking_Correction
+    ui_port: 6221
+    api_port: 6222
+    integration_status: legacy
+    legacy_note: 历史 Flywheel 入口，已由 topic2-dynbench 展示服务取代
+    dual_stack: true
+
+  - id: topic3-benchmark
+    topic: 3
+    seq: 1
+    name: 风险分级分类 Benchmark
+    repo: Project_3_Risk_Hierarchical_Classification_Benchmark
+    ui_port: 6006
+    integration_status: ready
+    legacy_note: 已部署 amax，端口保持不变
+    start:
+      single:
+        command: ./run.sh
+        env:
+          PORT: "{ui_port}"
+
+  - id: topic3-compliance-edit
+    topic: 3
+    seq: 2
+    name: 合规编辑工具
+    repo: Project_3_Compliance_Editing_Tool
+    ui_port: 6311
+    api_port: 6311
+    health_path: /healthz
+    integration_status: ready
+    legacy_port: 8082
+    legacy_note: 课题三 README 示例端口为 8082；平台统一要求 API 绑定 6311，并复用 topic3 dynamic difficulty 的 6332 router / 6333 generation / 6334 guard。
+    start:
+      single:
+        command: uv run --project editing_api uvicorn main:app --app-dir editing_api --host 127.0.0.1 --port {ui_port}
+        optional: true
+        log_path: .project5-compliance-edit.log
+        env:
+          COMPLIANCE_EDITOR_API_BASE: "http://127.0.0.1:6332/v1"
+          COMPLIANCE_EDITOR_MODEL: "Qwen3.5-9B"
+          COMPLIANCE_GUARD_API_BASE: "http://127.0.0.1:6332/v1"
+          COMPLIANCE_GUARD_MODEL: "Qwen3Guard-Gen-4B"
+          COMPLIANCE_TRANSLATOR_API_BASE: "http://127.0.0.1:6332/v1"
+          COMPLIANCE_TRANSLATOR_MODEL: "Hy-MT2-7B"
+          COMPLIANCE_EDITOR_TIMEOUT: "90"
+          COMPLIANCE_GUARD_TIMEOUT: "60"
+          COMPLIANCE_TRANSLATOR_TIMEOUT: "120"
+
+  - id: topic3-diversity-rewrite
+    topic: 3
+    seq: 3
+    name: 文化多样性改写
+    repo: Project_3_Cultural_Generation_Tool
+    ui_port: 6321
+    api_port: 6322
+    data_port: 6323
+    integration_status: ready
+    legacy_note: 原始版本使用 index.html + json-server:3000 + FastAPI:8081；平台接入后统一迁移到 6321/6322/6323
+    start:
+      data:
+        cwd: .
+        command: json-server --watch data/db.json --host 0.0.0.0 --port {data_port}
+      backend:
+        cwd: .
+        command: python backend.py
+        env:
+          APP_HOST: "0.0.0.0"
+          APP_PORT: "{api_port}"
+      frontend:
+        cwd: .
+        command: python -m http.server {ui_port}
+
+  - id: topic3-dynamic-difficulty-agent
+    topic: 3
+    seq: 4
+    name: 动态难度出题 Agent
+    repo: Project_3_Dynamic_Difficulty_Question_Generation_Tool
+    ui_port: 6331
+    model_router_port: 6332
+    generation_worker_port: 6333
+    guard_worker_port: 6334
+    integration_status: pending
+    legacy_port: 8766
+    legacy_note: 原 README 使用 8766，默认 vLLM router/worker 使用 8000/8011/8012；平台服务器统一迁入 6331-6334，避免与后续服务冲突
+    start:
+      generation_worker:
+        cwd: .
+        command: conda run --no-capture-output -n llmsafe-topic3-difficulty-py312 vllm serve Qwen/Qwen3.5-9B --host 127.0.0.1 --port {generation_worker_port} --served-model-name Qwen3.5-9B
+      guard_worker:
+        cwd: .
+        command: conda run --no-capture-output -n llmsafe-topic3-difficulty-py312 vllm serve Qwen/Qwen3Guard-Gen-4B --host 127.0.0.1 --port {guard_worker_port} --served-model-name Qwen3Guard-Gen-4B
+      router:
+        cwd: .
+        command: conda run --no-capture-output -n llmsafe-topic3-difficulty-py312 python -m uvicorn main:app --app-dir vllm_router --host 127.0.0.1 --port {model_router_port}
+        env:
+          VLLM_ROUTER_MODEL_MAP: '{"Qwen3.5-9B":"http://127.0.0.1:{generation_worker_port}/v1","Qwen3Guard-Gen-4B":"http://127.0.0.1:{guard_worker_port}/v1"}'
+      single:
+        cwd: .
+        command: .venv/bin/python ui/server.py --host 127.0.0.1 --port {ui_port}
+        env:
+          TOPIC3_DIFFICULTY_VLLM_API_BASE: "http://127.0.0.1:{model_router_port}/v1"
+
+  - id: topic3-dynamic-risk-benchmark
+    topic: 3
+    seq: 7
+    name: 动态风险 Benchmark 生成
+    repo: Project_3_Dynamic_Risk_Benchmark_Generation
+    ui_port: 6351
+    api_port: 6352
+    health_path: /health
+    integration_status: pending
+    legacy_note: AutoDL 默认 Agent :9000 / Qwen :8000；平台服务器迁入 Agent 6351、Qwen 6352，避免与课题五历史 8000 及动态难度 6331–6334 冲突。start-platform 不自动拉起 GPU/Agent。
+    start:
+      single:
+        cwd: qwen_agent_server
+        command: python -m uvicorn agent_server:app --host 127.0.0.1 --port {ui_port}
+        optional: true
+        log_path: .project5-topic3-risk-agent.log
+
+  - id: topic3-cultural-assessment-console
+    topic: 3
+    seq: 5
+    name: 文化多样性评估控制台
+    repo: Project_3_Cultural_Diversity_Assessment_Tool
+    ui_port: 8877
+    api_port: 8877
+    health_path: /api/health
+    integration_status: ready
+    start:
+      single:
+        cwd: culture_eval_console
+        command: python server.py --host 127.0.0.1 --port {ui_port}
+        optional: true
+        log_path: .project5-cultural-assessment-console.log
+
+  - id: topic3-cultural-assessment-console-v2
+    topic: 3
+    seq: 6
+    name: 文化多样性评估控制台 v2
+    repo: Project_3_Cultural_Diversity_Assessment_Tool
+    ui_port: 8878
+    api_port: 8878
+    health_path: /api/health
+    integration_status: ready
+    legacy_note: Cultural Diversity Evaluation Dataset V1(500) 的实时基准验证、归因和模型对比任务入口；仅供 Project 5 BFF 内部代理访问
+    start:
+      single:
+        cwd: culture_eval_console_v2
+        command: python server.py --host 127.0.0.1 --port {ui_port}
+        optional: true
+        log_path: .project5-cultural-assessment-console-v2.log
+
+  - id: topic4-input-workflow
+    topic: 4
+    seq: 1
+    name: 输入侧血缘图谱与风险标注工作流
+    repo: Project_4_Input_workflow
+    api_port: 8081
+    health_path: /api/health
+    integration_status: ready
+    dependency_note: dataflow 依赖由 pip install open-dataflow 提供；若只做最小血缘接口联调，课题四建议可临时注释 dataflow 清洗调用
+    legacy_note: 当前课题四确认入口为 app.py，接口为同步 API；课题五通过 BFF 调用 /api/build_graph 与 /api/graph/merge
+    start:
+      single:
+        cwd: .
+        command: python app.py --host 0.0.0.0 --port {api_port}
+        env:
+          APP_HOST: "0.0.0.0"
+          APP_PORT: "{api_port}"
+        optional: true
+        log_path: .project5-topic4-input-workflow.log

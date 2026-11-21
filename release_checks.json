@@ -1,0 +1,44 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "{python}",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_health.py",
+        "tests/test_governance_sessions.py"
+      ],
+      "cwd": "web/backend",
+      "name": "backend-health-sessions"
+    },
+    {
+      "argv": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile"
+      ],
+      "cwd": "web/frontend",
+      "name": "frontend-install",
+      "timeout": 900,
+      "env": {
+        "npm_config_registry": "https://registry.npmjs.org",
+        "npm_config_network_concurrency": "12",
+        "npm_config_fetch_retries": "4",
+        "npm_config_fetch_retry_mintimeout": "1000",
+        "npm_config_fetch_retry_maxtimeout": "4000"
+      }
+    },
+    {
+      "argv": [
+        "pnpm",
+        "build"
+      ],
+      "cwd": "web/frontend",
+      "name": "frontend-build",
+      "timeout": 360
+    }
+  ],
+  "scope": "Pinned source byte/mode integrity, declared CPU/HTTP/frontend checks. Full model/GPU/data-dependent functionality is not implied. Upstream failures are preserved and separately documented.",
+  "servers": []
+}

@@ -6,6 +6,7 @@
     append-to-body
     destroy-on-close
     class="cbrne-sample-drawer-host"
+    modal-class="cbrne-sample-drawer-modal"
     @update:model-value="handleVisibilityChange"
     @opened="openDrawerSession"
     @closed="handleClosed"
@@ -532,6 +533,26 @@ onBeforeUnmount(resetDrawerSession)
 
   .drawer-summary {
     flex-direction: column;
+  }
+}
+</style>
+
+<!--
+  Drawer panel is absolute inside el-overlay. Offset only the teleported overlay so
+  AppHeader stays visible/clickable; the panel then fills the remaining viewport.
+-->
+<style>
+.cbrne-sample-drawer-modal.el-overlay {
+  /* Match AppHeader heights: 64px desktop, 56px ≤900px. */
+  --cbrne-drawer-header-offset: 64px;
+  top: var(--cbrne-drawer-header-offset);
+  height: calc(100% - var(--cbrne-drawer-header-offset));
+  bottom: auto;
+}
+
+@media (max-width: 900px) {
+  .cbrne-sample-drawer-modal.el-overlay {
+    --cbrne-drawer-header-offset: 56px;
   }
 }
 </style>

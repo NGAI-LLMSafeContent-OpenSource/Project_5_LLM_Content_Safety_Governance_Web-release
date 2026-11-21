@@ -10,6 +10,14 @@ export interface Topic1CorpusTool {
   executable: boolean
   source_package: string
   source_sha256: string
+  source_repository: string
+  source_revision: string
+  service_status?: {
+    connection: 'not_configured' | 'unreachable' | 'online'
+    readiness: 'unknown' | 'missing_resources' | 'unverified' | 'declared_ready' | 'demo'
+    message: string
+    checked_at: string
+  } | null
   input_contract: string
   output_contract: string
   requirements: string[]

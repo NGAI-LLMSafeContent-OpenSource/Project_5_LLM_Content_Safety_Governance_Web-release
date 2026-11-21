@@ -54,6 +54,7 @@ from app.services.topic1_corpus_tool_service import (
     Topic1CorpusToolCatalogError,
     load_topic1_corpus_tool_catalog,
 )
+from app.services.topic1_corpus_tool_runtime import enrich_service_status
 
 router = APIRouter(prefix="/api/data-input", tags=["data-input"])
 
@@ -150,13 +151,15 @@ async def corpus_catalog(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/topic1/corpus-tools")
-async def topic1_corpus_tools():
+async def topic1_corpus_tools(check_runtime: bool = Query(default=False)):
     """Return the reviewed Topic 1 tool readiness snapshot for input governance."""
 
     try:
         data = load_topic1_corpus_tool_catalog()
     except Topic1CorpusToolCatalogError as exc:
         raise HTTPException(status_code=503, detail=exc.public_message) from exc
+    if check_runtime:
+        data = await enrich_service_status(data)
     return ok(data.model_dump())
 
 

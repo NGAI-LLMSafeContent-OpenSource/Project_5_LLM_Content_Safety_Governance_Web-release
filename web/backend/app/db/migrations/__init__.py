@@ -22,6 +22,8 @@ from app.db.migrations.versions import (
     v015_remove_dynbench400_eval_records,
     v016_benchmark_sample_disclosure_request_id,
     v017_remove_orphaned_dynbench_plan_messages,
+    v018_topic1_corpus_tool_jobs,
+    v019_topic1_corpus_archives,
 )
 
 
@@ -43,6 +45,8 @@ REVISIONS = (
     v015_remove_dynbench400_eval_records,
     v016_benchmark_sample_disclosure_request_id,
     v017_remove_orphaned_dynbench_plan_messages,
+    v018_topic1_corpus_tool_jobs,
+    v019_topic1_corpus_archives,
 )
 MIGRATED_TABLES = frozenset(
     v001_governance_sessions.TABLE_NAMES
@@ -61,6 +65,8 @@ MIGRATED_TABLES = frozenset(
     + v015_remove_dynbench400_eval_records.TABLE_NAMES
     + v016_benchmark_sample_disclosure_request_id.TABLE_NAMES
     + v017_remove_orphaned_dynbench_plan_messages.TABLE_NAMES
+    + v018_topic1_corpus_tool_jobs.TABLE_NAMES
+    + v019_topic1_corpus_archives.TABLE_NAMES
 )
 
 

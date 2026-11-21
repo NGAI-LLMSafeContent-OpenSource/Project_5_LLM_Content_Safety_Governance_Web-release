@@ -1,6 +1,6 @@
 {
   "name": "content-safety-platform",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "description": "基于数据价值的内容安全治理平台 - 前端工程",
@@ -15,6 +15,9 @@
     "lint:check": "eslint \"src/**/*.{ts,vue}\" env.d.ts vite.config.ts --max-warnings=0",
     "format": "prettier --write \"src/**/*.{ts,vue,css}\" \"*.{json,yml,yaml}\"",
     "format:check": "prettier --check \"src/**/*.{ts,vue,css}\" \"*.{json,yml,yaml}\"",
+    "prepare": "cd ../.. && node web/frontend/node_modules/husky/bin.js",
+    "setup:hooks": "pnpm run prepare",
+    "verify:hooks": "node scripts/verify-hooks.mjs",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {

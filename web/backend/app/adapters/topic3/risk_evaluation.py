@@ -162,7 +162,7 @@ def _read_predictions(
     return sample_ids, row_digests, count, prediction_rows
 
 
-def _v6_samples_path(asset: BenchmarkAsset) -> Path | None:
+def _reference_samples_path(asset: BenchmarkAsset) -> Path | None:
     """Resolve the gold samples file: manifest ``files.samples`` first, then
     the v6 freeze name ``samples_v6.jsonl``, then legacy ``samples.jsonl``."""
     artifact_dir = Path(asset.artifact_dir or "")
@@ -178,9 +178,9 @@ def _v6_samples_path(asset: BenchmarkAsset) -> Path | None:
     return None
 
 
-def load_v6_sample_rows(asset: BenchmarkAsset) -> list[dict[str, Any]]:
-    """Load gold labels from the frozen v6 samples file (create-time only)."""
-    path = _v6_samples_path(asset)
+def load_risk_reference_sample_rows(asset: BenchmarkAsset) -> list[dict[str, Any]]:
+    """Load gold labels from a versioned risk asset (create-time only)."""
+    path = _reference_samples_path(asset)
     if path is None:
         return []
     rows: list[dict[str, Any]] = []
@@ -249,13 +249,25 @@ def _manifest_entries(asset: BenchmarkAsset) -> list[dict[str, Any]]:
     ]
 
 
+def _benchmark_version(asset: BenchmarkAsset) -> str:
+    try:
+        manifest = json.loads(asset.manifest_json or "{}")
+    except json.JSONDecodeError:
+        return "v6"
+    if not isinstance(manifest, dict):
+        return "v6"
+    return str(manifest.get("asset_version") or "v6")
+
+
 def _pick_entry(
     entries: list[dict[str, Any]], *, role: str, model_id: str
 ) -> dict[str, Any] | None:
     for entry in entries:
-        if entry.get("role") == role and entry.get("model_id") == model_id:
+        if entry.get("role") == role:
             return entry
     for entry in entries:
+        # Legacy v6 manifests did not consistently declare roles. Preserve the
+        # established model-id fallback without constraining newer series runs.
         if entry.get("model_id") == model_id:
             return entry
     return None
@@ -375,7 +387,7 @@ def _load_package(
 
 
 def load_risk_review_evidence(asset: BenchmarkAsset) -> dict[str, Any]:
-    """Load V7 (primary) and Base (baseline) packages for a risk v6 asset."""
+    """Load the asset's primary package and optional same-version baseline."""
     entries = _manifest_entries(asset)
     primary_entry = _pick_entry(
         entries, role="primary", model_id=PRIMARY_MODEL_ID
@@ -385,21 +397,22 @@ def load_risk_review_evidence(asset: BenchmarkAsset) -> dict[str, Any]:
     )
     if primary_entry is None:
         raise FileNotFoundError(
-            f"risk review evidence missing primary package "
-            f"(role=primary, model_id={PRIMARY_MODEL_ID})"
+            "risk review evidence missing primary package (role=primary)"
         )
-    if baseline_entry is None:
-        raise FileNotFoundError(
-            f"risk review evidence missing baseline package "
-            f"(role=baseline, model_id={BASELINE_MODEL_ID})"
-        )
-
     primary = _load_package(asset, primary_entry, role="primary")
-    baseline = _load_package(asset, baseline_entry, role="baseline")
-    files = list(primary["files"]) + list(baseline["files"])
+    baseline = (
+        _load_package(asset, baseline_entry, role="baseline")
+        if baseline_entry is not None
+        else None
+    )
+    files = list(primary["files"])
+    if baseline is not None:
+        files.extend(baseline["files"])
     return {
+        # Compatibility identifier consumed by existing v6 snapshots/tests;
+        # benchmark_version below carries the actual v6/v7 asset identity.
         "source": "topic3_risk_v6_evaluation",
-        "benchmark_version": "v6",
+        "benchmark_version": _benchmark_version(asset),
         "primary": primary,
         "baseline": baseline,
         "files": files,

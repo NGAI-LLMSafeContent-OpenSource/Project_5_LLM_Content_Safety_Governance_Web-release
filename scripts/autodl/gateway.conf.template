@@ -1,0 +1,45 @@
+# AutoDL gateway template for Phase 2.
+#
+# The gateway should own AUTODL_GATEWAY_PORT, normally 6006, and forward to
+# internal services by path. Keep Topic 3 Benchmark on TOPIC3_BENCHMARK_PORT
+# inside AutoDL so it does not conflict with the public gateway.
+
+server {
+    listen ${AUTODL_GATEWAY_PORT};
+    server_name _;
+
+    root ${PROJECT5_FRONTEND_ROOT};
+    index index.html;
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:${PROJECT5_BACKEND_PORT}/api/;
+    }
+
+    location /integration/topic1/ {
+        proxy_pass http://127.0.0.1:${TOPIC1_FRONTEND_PORT}/;
+    }
+
+    location /integration/topic2/ {
+        proxy_pass http://127.0.0.1:${TOPIC2_SHOWCASE_PORT}/;
+    }
+
+    location /integration/topic2-dynbench/ {
+        proxy_pass http://127.0.0.1:${TOPIC2_DYNBENCH_PORT}/;
+    }
+
+    location /integration/topic3-benchmark/ {
+        proxy_pass http://127.0.0.1:${TOPIC3_BENCHMARK_PORT}/;
+    }
+
+    location /integration/topic3-diversity/ {
+        proxy_pass http://127.0.0.1:${TOPIC3_DIVERSITY_UI_PORT}/;
+    }
+
+    location /integration/topic3-difficulty/ {
+        proxy_pass http://127.0.0.1:${TOPIC3_DIFFICULTY_PORT}/;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 
 from app.api.routes_indicators import router as indicators_router
 from app.api.routes_data_input import router as data_input_router
+from app.api.routes_topic1_corpus_jobs import router as topic1_corpus_jobs_router
 from app.api.routes_benchmark import router as benchmark_router
 from app.api.routes_benchmark_admin import router as benchmark_admin_router
 from app.api.routes_mining_inputs import router as mining_inputs_router
@@ -48,21 +49,16 @@ async def lifespan(app: FastAPI):
         await apply_migrations(conn)
     async with AsyncSessionLocal() as session:
         await BenchmarkAssetRegistryService().ensure_prerun_assets_registered(session)
-        # Release snapshots contain no cross-topic datasets. Explicitly configure
-        # their locations before enabling startup imports.
-        if settings.topic3_risk_benchmark_default_final_dir.strip():
-            try:
-                await ensure_topic3_risk_series_registered(session)
-            except Exception:
-                await session.rollback()
-                logger.exception("Failed to register configured topic3 risk assets")
+        try:
+            await ensure_topic3_risk_series_registered(session)
+        except Exception:
+            await session.rollback()
+            logger.exception("Failed to register topic3 risk benchmark asset series")
         await ensure_preferred_value_qa_assets(session)
-        if settings.cultural_corpus_runs_dir.strip():
-            try:
-                await BenchmarkTopic3CulturalAssetService().ensure_default_asset(session)
-            except Exception:
-                await session.rollback()
-                logger.exception("Failed to register configured topic3 cultural assets")
+        try:
+            await BenchmarkTopic3CulturalAssetService().ensure_default_asset(session)
+        except Exception:
+            logger.exception("Failed to ensure topic3 cultural prerun asset")
     yield
 
 
@@ -80,6 +76,7 @@ app.include_router(mining_inputs_router)
 app.include_router(mining_tasks_router)
 app.include_router(indicators_router)
 app.include_router(data_input_router)
+app.include_router(topic1_corpus_jobs_router)
 app.include_router(benchmark_router)
 app.include_router(benchmark_admin_router)
 app.include_router(output_eval_router)

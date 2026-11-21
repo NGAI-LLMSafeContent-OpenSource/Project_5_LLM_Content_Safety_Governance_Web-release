@@ -2579,7 +2579,7 @@ export interface RiskPrerunReviewReport {
   report_type: 'risk_classifier_cross_check'
   envelope: RiskPrerunReviewEnvelope
   primary_evaluator: RiskEvaluatorMetrics
-  baseline_evaluator: RiskEvaluatorMetrics
+  baseline_evaluator: RiskEvaluatorMetrics | null
   dimension_summaries: RiskPrerunDimensionSummary[]
   integrity_warnings: RiskPrerunIntegrityWarning[]
   /** #91: recognition differences vs asset integrity problems. */

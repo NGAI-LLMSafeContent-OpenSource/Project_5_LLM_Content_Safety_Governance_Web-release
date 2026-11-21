@@ -1,0 +1,14 @@
+* text=auto
+
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.sh text eol=lf
+.husky/* text eol=lf
+.gitattributes text eol=lf
+
+# Preserve publisher package bytes so SHARE_MANIFEST.json stays valid across OSes.
+scripts/repository-publisher/** -text

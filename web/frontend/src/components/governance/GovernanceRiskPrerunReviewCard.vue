@@ -3,7 +3,9 @@
     <header class="risk-prerun-review__head">
       <div>
         <p class="risk-prerun-review__eyebrow">风险识别器交叉核对 · 预跑记录审阅</p>
-        <h4>V7 正式摘要与 Base 基线对照</h4>
+        <h4>
+          {{ payload.baseline_evaluator ? 'V7 正式摘要与 Base 基线对照' : 'V7 正式摘要' }}
+        </h4>
       </div>
       <span class="risk-prerun-review__badge">报告快照 · 不重新读取上游</span>
     </header>
@@ -32,14 +34,22 @@
           <span><BreakableText :text="payload.primary_evaluator.model_id" /></span>
           <span><BreakableText :text="payload.primary_evaluator.run_id" /></span>
         </article>
-        <article class="risk-prerun-review__version is-baseline">
+        <article v-if="payload.baseline_evaluator" class="risk-prerun-review__version is-baseline">
           <strong>Base 基线</strong>
           <span><BreakableText :text="payload.baseline_evaluator.model_id" /></span>
           <span><BreakableText :text="payload.baseline_evaluator.run_id" /></span>
         </article>
+        <article v-else class="risk-prerun-review__version is-baseline">
+          <strong>基线对照</strong>
+          <span>本版本暂无同版本基线</span>
+        </article>
       </div>
       <p class="risk-prerun-review__note">
-        V7 为正式摘要与问题清单依据；Base 仅作基线对照段落，二者不得静默合并。
+        {{
+          payload.baseline_evaluator
+            ? 'V7 为正式摘要与问题清单依据；Base 仅作基线对照段落，二者不得静默合并。'
+            : 'V7 为正式摘要与问题清单依据；本版本暂无同版本基线。'
+        }}
       </p>
     </section>
 
@@ -68,7 +78,7 @@
       </details>
     </section>
 
-    <section class="risk-prerun-review__section">
+    <section v-if="payload.baseline_evaluator" class="risk-prerun-review__section">
       <h5>基线对照（Base · baseline）</h5>
       <p class="risk-prerun-review__note">
         <BreakableText
@@ -152,15 +162,20 @@
         </li>
       </ul>
       <p class="risk-prerun-review__note">
-        问题清单不含责任人、分派或处理状态；Base
-        预测不进入正式清单；同一条样本可同时出现在两套视图。
+        问题清单不含责任人、分派或处理状态；{{
+          payload.baseline_evaluator ? 'Base 预测不进入正式清单；' : ''
+        }}同一条样本可同时出现在两套视图。
       </p>
     </section>
 
     <section class="risk-prerun-review__section">
       <h5>完整性告警（{{ payload.integrity_warnings.length }}）</h5>
       <p v-if="!payload.integrity_warnings.length" class="risk-prerun-review__note">
-        未发现包级完整性告警；V7 / Base 评测包与资产登记一致。
+        {{
+          payload.baseline_evaluator
+            ? '未发现包级完整性告警；V7 / Base 评测包与资产登记一致。'
+            : '未发现包级完整性告警；V7 primary 评测包与资产登记一致。'
+        }}
       </p>
       <ul v-else class="risk-prerun-review__warnings">
         <li
@@ -310,7 +325,7 @@ const primaryMetricEntries = computed(() =>
 )
 const baselineMetricEntries = computed(() =>
   metricEntries(
-    (payload.value?.baseline_evaluator.primary_metrics ?? {}) as Record<string, unknown>,
+    (payload.value?.baseline_evaluator?.primary_metrics ?? {}) as Record<string, unknown>,
     PRIMARY_LABELS,
   ),
 )

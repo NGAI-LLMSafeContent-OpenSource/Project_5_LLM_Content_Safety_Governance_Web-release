@@ -62,6 +62,15 @@ assert(
 )
 
 assert(
+  drawerSource.includes('modal-class="cbrne-sample-drawer-modal"') &&
+    drawerSource.includes('.cbrne-sample-drawer-modal.el-overlay') &&
+    drawerSource.includes('--cbrne-drawer-header-offset') &&
+    drawerSource.includes('calc(100% - var(--cbrne-drawer-header-offset))') &&
+    !/\.cbrne-sample-drawer-host\.el-drawer\s*\{[^}]*top:/.test(drawerSource),
+  'CBRNE overlay must sit below AppHeader (drawer fills overlay; do not double-offset the panel)',
+)
+
+assert(
   !drawerSource.includes('useRoute(') &&
     !drawerSource.includes('router.push') &&
     !drawerSource.includes('full_text=') &&

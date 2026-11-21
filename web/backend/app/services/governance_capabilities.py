@@ -86,6 +86,7 @@ from app.services.governance_system_record_service import (
     list_cultural_system_records,
     list_risk_system_records,
 )
+from app.services.topic1_corpus_tool_runtime import enrich_service_status
 from app.services.topic1_corpus_tool_service import (
     Topic1CorpusToolCatalogError,
     load_topic1_corpus_tool_catalog,
@@ -221,6 +222,7 @@ async def _run_topic1_corpus_tool_catalog(
     del db
     try:
         result: Topic1CorpusToolCatalogResult = load_topic1_corpus_tool_catalog()
+        result = await enrich_service_status(result)
     except Topic1CorpusToolCatalogError:
         result = unavailable_topic1_corpus_tool_catalog()
     return CapabilityResult(payload=result.model_dump(), content=result.render_content())

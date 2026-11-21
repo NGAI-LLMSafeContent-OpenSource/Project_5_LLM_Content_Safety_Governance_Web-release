@@ -33,6 +33,14 @@ class Settings(BaseSettings):
     predictions_snapshot_dir: str = ""
     topic4_input_workflow_base_url: str = "http://127.0.0.1:8081"
     topic4_input_workflow_timeout_seconds: float = 30.0
+    # Explicitly opt in: no discovery of developer-local repositories or models.
+    topic1_refinement_base_url: str = ""
+    topic1_refinement_api_key: SecretStr = SecretStr("")
+    topic1_detox_base_url: str = ""
+    topic1_detection_base_url: str = ""
+    topic1_corpus_tools_timeout_seconds: float = Field(default=5.0, gt=0, le=30)
+    # Admin-managed aliases only. Browser/LLM never supplies model paths or URLs.
+    topic1_detection_models: dict[str, dict[str, str]] = {}
     topic2_autobench_base_url: str = "http://127.0.0.1:8766"
     topic2_autobench_api_token: str = ""
     topic2_autobench_health_timeout_seconds: float = 2.0
@@ -61,7 +69,7 @@ class Settings(BaseSettings):
     topic2_filterguard_method: str = "keyword"
     # Remote Activation Probe (neuron showcase) served by Topic 2 on AutoDL.
     topic2_activation_probe_base_url: str = (
-        "http://127.0.0.1:6212"
+        "https://u165979-8749-15195365.westc.seetacloud.com:8443"
     )
     topic2_activation_probe_proxy_url: str = ""
     topic2_activation_probe_timeout_seconds: float = 60.0
@@ -69,7 +77,7 @@ class Settings(BaseSettings):
     # New Activation Probe per-text cap; over-long text fails the whole batch.
     topic2_activation_probe_max_text_chars: int = 32768
     # Default risk-detect method for input module: activation_probe | keyword
-    topic2_risk_detect_method: str = "keyword"
+    topic2_risk_detect_method: str = "activation_probe"
     # Optional stable upstream service/build/model version. Empty means the
     # executor identity is frozen as a provisional fingerprint.
     topic2_risk_detect_version: str = ""
@@ -123,13 +131,13 @@ class Settings(BaseSettings):
     topic1_value_qa_default_trace_predictions_path: str = ""
     topic1_value_qa_default_trace_low_issues_path: str = ""
     topic1_value_qa_prompt_snapshot: str = "value_qa-v4-20260707_103918"
-    topic1_value_qa_auto_ensure: bool = False
+    topic1_value_qa_auto_ensure: bool = True
     compliance_edit_base_url: str = "http://127.0.0.1:6311"
     compliance_edit_timeout_seconds: float = 60.0
     output_guardrail_detect_timeout_seconds: float = 60.0
     # Governance assistant: exactly one provider active at a time. "stub" is the
     # deterministic test/dev seam, not a production model provider.
-    governance_assistant_provider: Literal["qwen", "deepseek", "stub"] = "stub"
+    governance_assistant_provider: Literal["qwen", "deepseek", "stub"] = "qwen"
     governance_assistant_timeout_seconds: float = 60.0
     # Wall-clock budget for one governance turn's skill selection and planning
     # calls together. Independent of the per-read inactivity timeout above:

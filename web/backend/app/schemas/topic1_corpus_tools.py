@@ -23,6 +23,13 @@ Topic1CorpusToolKey = Literal[
 Topic1CorpusWorkflowStage = Literal["assessment", "correction", "delivery"]
 
 
+class Topic1ToolServiceStatus(BaseModel):
+    connection: Literal["not_configured", "unreachable", "online"]
+    readiness: Literal["unknown", "missing_resources", "unverified", "declared_ready", "demo"]
+    message: str
+    checked_at: str
+
+
 class Topic1CorpusToolDescriptor(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -41,6 +48,9 @@ class Topic1CorpusToolDescriptor(BaseModel):
     executable: bool
     source_package: str = ""
     source_sha256: str = ""
+    source_repository: str = ""
+    source_revision: str = ""
+    service_status: Topic1ToolServiceStatus | None = None
     input_contract: str
     output_contract: str
     requirements: list[str] = Field(default_factory=list)
@@ -50,6 +60,11 @@ class Topic1CorpusToolDescriptor(BaseModel):
 
     @model_validator(mode="after")
     def validate_delivery_and_runtime_truth(self) -> "Topic1CorpusToolDescriptor":
+        if self.source_repository or self.source_revision:
+            if not re.fullmatch(r"Project_1_[A-Za-z0-9_]+", self.source_repository):
+                raise ValueError("Invalid Topic 1 repository name")
+            if not re.fullmatch(r"[0-9a-f]{40}", self.source_revision):
+                raise ValueError("Source revision must be a complete commit ID")
         if self.delivery_status == "source_delivered":
             if not self.source_package.strip():
                 raise ValueError("源码已交付的工具必须登记 source_package")

@@ -1301,12 +1301,12 @@ class RiskReviewIssueLists(BaseModel):
 
 class RiskPrerunReviewReport(BaseModel):
     capability: Literal["risk_prerun_review"] = RISK_PRERUN_REVIEW_CAPABILITY
-    capability_version: str = "v1"
+    capability_version: str = "v2"
     task_id: str
     report_type: Literal["risk_classifier_cross_check"] = "risk_classifier_cross_check"
     envelope: GovernanceReportEnvelope
     primary_evaluator: RiskEvaluatorMetrics
-    baseline_evaluator: RiskEvaluatorMetrics
+    baseline_evaluator: RiskEvaluatorMetrics | None = None
     dimension_summaries: list[dict[str, str]] = Field(default_factory=list)
     integrity_warnings: list[dict[str, Any]] = Field(default_factory=list)
     issue_lists: RiskReviewIssueLists = Field(default_factory=RiskReviewIssueLists)
@@ -1318,10 +1318,15 @@ class RiskPrerunReviewReport(BaseModel):
         warning_n = len(self.integrity_warnings)
         recognition_n = len(self.issue_lists.recognition)
         integrity_n = len(self.issue_lists.integrity)
+        baseline_summary = (
+            f"Base（{self.baseline_evaluator.model_id}）仅作基线对照；"
+            if self.baseline_evaluator is not None
+            else "本版本暂无同版本基线；"
+        )
         return (
             "风险识别器预跑记录审阅任务已完成。"
             f"正式摘要为 V7（{self.primary_evaluator.model_id}），"
-            f"Base（{self.baseline_evaluator.model_id}）仅作基线对照；"
+            f"{baseline_summary}"
             f"识别差异 {recognition_n} 条，资产完整性问题 {integrity_n} 条；"
             f"完整性告警 {warning_n} 条；"
             "本报告验证风险识别器四维指标，不以综合安全分评价生成模型整体安全性。"

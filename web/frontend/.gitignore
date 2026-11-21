@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+packages/client/dist/
+packages/server/dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite
+*.db
+
+# Docker
+docker/mysql/data/
+
+# Test coverage
+coverage/
+
+# Auto-generated files
+src/auto-imports.d.ts
+src/components.d.ts
+
+# Temporary files
+*.tmp
+temp/

@@ -1,0 +1,80 @@
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+.idea/
+.codex/
+.codex-doc-review/
+.codex_tmp/
+.superpowers/
+web/backend/.idea/
+
+# Local environment
+.env
+.env.*
+!.env.example
+!web/frontend/.env.development
+!web/frontend/.env.production
+scripts/server/deploy.env
+
+# Local-only private launchers (do not commit; use *.local.*)
+scripts/*.local.ps1
+scripts/*.local.mjs
+scripts/*.local.md
+scripts/*.local.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+.venv-win/
+venv/
+env/
+web/backend/.venv-win/
+
+# Topic 2 answer-machine assets (local demo /答辩机敏感材料，勿提交)
+web/backend/topic2-showcase-assets/
+web/backend/.topic2-showcase.log
+web/backend/benchmark-artifacts/
+web/backend/benchmark-delivery-staging/
+web/backend/.cache/
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Frontend dependencies and build outputs
+node_modules/
+dist/
+build/
+.next/
+
+# Local doc scratch space
+.codex-build/
+.codex-ppt-build/
+.codex-finalizer/
+artifacts/
+docs/tmp/
+outputs/
+tmp/
+**/operations/.pr-review/
+
+# Office lock files (open .pptx/.docx leave these behind)
+~$*
+
+# Platform redesign PPT: markdown is source of truth; generate locally
+docs/planning/**/*.pptx
+docs/planning/scripts/
+
+.worktrees/
+

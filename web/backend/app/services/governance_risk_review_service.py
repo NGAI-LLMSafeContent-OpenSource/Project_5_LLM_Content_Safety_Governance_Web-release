@@ -13,8 +13,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.adapters.topic3.risk_evaluation import (
     BASELINE_MODEL_ID,
     PRIMARY_MODEL_ID,
+    load_risk_reference_sample_rows,
     load_risk_review_evidence,
-    load_v6_sample_rows,
 )
 from app.db.models import (
     BenchmarkAsset,
@@ -48,7 +48,7 @@ from app.services.governance_system_record_service import (
 _TAXONOMY_TITLES: dict[str, str] = dict(TOPIC3_RISK_CATEGORIES)
 
 
-CAPABILITY_VERSION = "v1"
+CAPABILITY_VERSION = "v2"
 # Test fixture id used by system-record tests; production id is ASSET_ID above.
 RISK_V6_TEST_ASSET_ID = "topic3_risk_v6_benchmark"
 SUPPORTED_RISK_REVIEW_ASSET_IDS = {
@@ -492,17 +492,9 @@ def _integrity_warnings(
         warnings.append(
             _warning(
                 "missing_primary_evaluator",
-                f"缺少 V7 正式评测包（model_id={PRIMARY_MODEL_ID}）。",
+                "缺少 primary 正式评测包。",
             )
         )
-    if not baseline:
-        warnings.append(
-            _warning(
-                "missing_baseline_evaluator",
-                f"缺少 Base 基线评测包（model_id={BASELINE_MODEL_ID}）。",
-            )
-        )
-
     sample_count = int((detail.get("dataset") or {}).get("sample_count") or 0)
     for role_name, package in (("primary", primary), ("baseline", baseline)):
         if not package:
@@ -551,13 +543,6 @@ def _integrity_warnings(
                 )
             )
 
-    if primary.get("model_id") and primary.get("model_id") != PRIMARY_MODEL_ID:
-        warnings.append(
-            _warning(
-                "primary_model_id_unexpected",
-                f"正式摘要模型应为 {PRIMARY_MODEL_ID}，实际为 {primary.get('model_id')}。",
-            )
-        )
     if baseline.get("model_id") and baseline.get("model_id") != BASELINE_MODEL_ID:
         warnings.append(
             _warning(
@@ -641,14 +626,18 @@ def _run_identity(
             "run_id": primary.get("run_id"),
             "evaluated_at": primary.get("evaluated_at"),
         },
-        "baseline": {
-            "role": "baseline",
-            "model_id": baseline.get("model_id"),
-            "model_version": baseline.get("model_version"),
-            "display_name": baseline.get("display_name"),
-            "run_id": baseline.get("run_id"),
-            "evaluated_at": baseline.get("evaluated_at"),
-        },
+        "baseline": (
+            {
+                "role": "baseline",
+                "model_id": baseline.get("model_id"),
+                "model_version": baseline.get("model_version"),
+                "display_name": baseline.get("display_name"),
+                "run_id": baseline.get("run_id"),
+                "evaluated_at": baseline.get("evaluated_at"),
+            }
+            if baseline
+            else None
+        ),
     }
 
 
@@ -663,9 +652,11 @@ def build_risk_review_report(
     forbidden_text_sha256: list[str] | None = None,
     benchmark_version: str = "v6",
 ) -> RiskPrerunReviewReport:
-    sample_rows = list(samples if samples is not None else load_v6_sample_rows(asset))
+    sample_rows = list(
+        samples if samples is not None else load_risk_reference_sample_rows(asset)
+    )
     primary = evidence["primary"]
-    baseline = evidence["baseline"]
+    baseline = evidence.get("baseline")
     warnings = _integrity_warnings(detail=detail, evidence=evidence)
     warnings.extend(_reference_sample_warnings(samples=sample_rows, primary=primary))
     # prediction_rows are used only to build issue_lists at create time; they are
@@ -690,6 +681,7 @@ def build_risk_review_report(
     delivery_ready = integrity_code == "passed"
     sample_count = int((detail.get("dataset") or {}).get("sample_count") or 0)
 
+    baseline_available = baseline is not None
     envelope = GovernanceReportEnvelope(
         evaluated_object={
             "record_id": detail["record_id"],
@@ -714,7 +706,12 @@ def build_risk_review_report(
         evaluation_run_status=GovernanceReportStatus(
             code="completed",
             label="来源评测已完成",
-            detail="审阅读取既有 V7 / Base 静态导入结果，没有重新运行模型。",
+            detail=(
+                "审阅读取既有 primary / baseline 静态导入结果，没有重新运行模型。"
+                if baseline_available
+                else "审阅读取既有 primary 静态导入结果；本版本暂无同版本基线，"
+                "没有重新运行模型。"
+            ),
         ),
         integrity_status=GovernanceReportStatus(
             code=integrity_code,
@@ -736,7 +733,11 @@ def build_risk_review_report(
             f"本报告验证风险识别器在 {benchmark_version} 基准上的四维表现，"
             "不是对生成模型整体安全性的评价。",
             "不以综合安全分汇总或排名；正式摘要与问题清单仅采用 V7 指标。",
-            "Base（qwen3.5-9B-base）仅作为基线对照段落，不得进入正式问题清单或与 V7 静默合并。",
+            (
+                "Base（qwen3.5-9B-base）仅作为基线对照段落，不得进入正式问题清单或与 primary 静默合并。"
+                if baseline_available
+                else "本版本暂无同版本基线；正式摘要与问题清单仅采用 primary 结果。"
+            ),
             "不评价生成模型的内容质量、事实正确性或合规处置能力。",
             SENSITIVITY_BOUNDARY,
         ],
@@ -779,7 +780,7 @@ def build_risk_review_report(
         },
         "evaluation_runs": {
             "primary": primary.get("run_id"),
-            "baseline": baseline.get("run_id"),
+            "baseline": baseline.get("run_id") if baseline else None,
         },
         "primary": {
             "model_id": primary.get("model_id"),
@@ -789,22 +790,31 @@ def build_risk_review_report(
             "prediction_row_sha256": list(primary.get("prediction_row_sha256") or []),
             "asset_sha256": primary.get("asset_sha256"),
         },
-        "baseline": {
-            "model_id": baseline.get("model_id"),
-            "run_id": baseline.get("run_id"),
-            "predictions_count": baseline.get("predictions_count"),
-            "sample_ids": list(baseline.get("sample_ids") or []),
-            "prediction_row_sha256": list(baseline.get("prediction_row_sha256") or []),
-            "asset_sha256": baseline.get("asset_sha256"),
-        },
+        "baseline": (
+            {
+                "model_id": baseline.get("model_id"),
+                "run_id": baseline.get("run_id"),
+                "predictions_count": baseline.get("predictions_count"),
+                "sample_ids": list(baseline.get("sample_ids") or []),
+                "prediction_row_sha256": list(
+                    baseline.get("prediction_row_sha256") or []
+                ),
+                "asset_sha256": baseline.get("asset_sha256"),
+            }
+            if baseline
+            else None
+        ),
         "evidence_files": evidence.get("files") or [],
     }
 
     return RiskPrerunReviewReport(
+        capability_version=CAPABILITY_VERSION,
         task_id=task_id,
         envelope=envelope,
         primary_evaluator=_evaluator_from_package(primary, "primary"),
-        baseline_evaluator=_evaluator_from_package(baseline, "baseline"),
+        baseline_evaluator=(
+            _evaluator_from_package(baseline, "baseline") if baseline else None
+        ),
         dimension_summaries=list(DIMENSION_SUMMARIES),
         integrity_warnings=warnings,
         issue_lists=issue_lists,
@@ -835,9 +845,15 @@ async def create_risk_prerun_review(
         raise RiskReviewConflictError(
             support.get("review_unavailable_reason") or RISK_REVIEW_UNSUPPORTED_REASON
         )
+    benchmark_version = str(detail.get("asset_version") or "v6")
     try:
         evidence = load_risk_review_evidence(asset)
-        samples = load_v6_sample_rows(asset)
+        if benchmark_version == "v6" and not evidence.get("baseline"):
+            raise FileNotFoundError(
+                "risk review evidence missing baseline package "
+                f"(role=baseline, model_id={BASELINE_MODEL_ID})"
+            )
+        samples = load_risk_reference_sample_rows(asset)
     except (FileNotFoundError, KeyError, OSError, ValueError) as error:
         raise RiskReviewEvidenceError(f"风险预跑评测证据不可用：{error}") from error
 
@@ -855,7 +871,7 @@ async def create_risk_prerun_review(
         completed_at=completed_at,
         samples=samples,
         forbidden_text_sha256=forbidden_digests,
-        benchmark_version=str(detail.get("asset_version") or "v6"),
+        benchmark_version=benchmark_version,
     )
     snapshot = report.model_dump()
     # Create-time redaction gate: scan frozen snapshot before persist.

@@ -487,9 +487,9 @@ export function getInputCorpusCatalog() {
 }
 
 export function getTopic1CorpusToolCatalog() {
-  return request.get(
-    '/data-input/topic1/corpus-tools',
-  ) as unknown as Promise<Topic1CorpusToolCatalogResult>
+  return request.get('/data-input/topic1/corpus-tools', {
+    params: { check_runtime: true },
+  }) as unknown as Promise<Topic1CorpusToolCatalogResult>
 }
 
 export function getInputCorpusRecords(params: { asset_id: string; kind?: string; limit?: number }) {

@@ -600,6 +600,12 @@ assert(
   'the risk report card must render V7/Base evaluators, dimensions, warnings and boundaries',
 )
 assert(
+  riskPrerunCardSource.includes('v-if="payload.baseline_evaluator"') &&
+    riskPrerunCardSource.includes('本版本暂无同版本基线') &&
+    typesSource.includes('baseline_evaluator: RiskEvaluatorMetrics | null'),
+  'the risk report card must render primary-only v7 reports without dereferencing a missing baseline',
+)
+assert(
   typesSource.includes('RiskPrerunReviewReport') &&
     typesSource.includes('risk_prerun_review') &&
     typesSource.includes('RiskReviewIssueLists') &&

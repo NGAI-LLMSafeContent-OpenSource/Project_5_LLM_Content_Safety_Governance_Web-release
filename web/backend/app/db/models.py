@@ -7,6 +7,7 @@ from sqlalchemy import (
     ForeignKey,
     Index,
     Integer,
+    LargeBinary,
     String,
     Text,
     UniqueConstraint,
@@ -19,6 +20,43 @@ from app.db.base import Base
 
 def utc_now() -> datetime:
     return datetime.now(timezone.utc).replace(tzinfo=None)
+
+
+class Topic1CorpusToolJob(Base):
+    __tablename__ = "topic1_corpus_tool_jobs"
+    __table_args__ = (UniqueConstraint("client_id", "request_id"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    client_id: Mapped[str] = mapped_column(String(36), index=True)
+    request_id: Mapped[str] = mapped_column(String(36))
+    request_hash: Mapped[str] = mapped_column(String(64))
+    tool: Mapped[str] = mapped_column(String(32))
+    operation: Mapped[str] = mapped_column(String(32))
+    source_name: Mapped[str] = mapped_column(String(200))
+    input_json: Mapped[str] = mapped_column(Text)
+    parameters_json: Mapped[str] = mapped_column(Text)
+    endpoint_hash: Mapped[str] = mapped_column(String(64))
+    upstream_id: Mapped[str] = mapped_column(String(128), default="")
+    status: Mapped[str] = mapped_column(String(32), default="submitting")
+    progress: Mapped[float | None] = mapped_column(Float, nullable=True)
+    result_json: Mapped[str | None] = mapped_column(Text, nullable=True)
+    result_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    error_code: Mapped[str] = mapped_column(String(64), default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
+
+
+class Topic1CorpusArchive(Base):
+    __tablename__ = "topic1_corpus_archives"
+    __table_args__ = (UniqueConstraint("job_id", "asset_key"),)
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    job_id: Mapped[str] = mapped_column(ForeignKey("topic1_corpus_tool_jobs.id"), index=True)
+    asset_key: Mapped[str] = mapped_column(String(128))
+    name: Mapped[str] = mapped_column(String(255))
+    sha256: Mapped[str] = mapped_column(String(64))
+    content: Mapped[bytes] = mapped_column(LargeBinary)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
 
 
 class SchemaMigration(Base):

@@ -42,7 +42,7 @@
           <strong>{{ executableCount }}</strong>
           项当前可运行
         </span>
-        <span>状态更新于 {{ catalog.source_snapshot_date }}</span>
+        <span>源码核验于 {{ catalog.source_snapshot_date }}</span>
       </div>
 
       <ul class="topic1-tool-list">
@@ -85,6 +85,9 @@
               {{ topic1ToolRuntimeStatusLabel(tool.runtime_status) }}
             </span>
             <small>{{ tool.executable ? '可用于当前流程' : tool.next_action }}</small>
+            <small v-if="tool.service_status" class="topic1-tool-row__service" role="status">
+              {{ tool.service_status.message }}
+            </small>
           </div>
         </li>
       </ul>
@@ -93,12 +96,14 @@
         未达到可执行条件的工具仅展示已核验状态，不会生成模拟处理结果。
       </p>
     </template>
+    <DataInputTopic1Execution />
   </section>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Refresh, SetUp } from '@element-plus/icons-vue'
+import DataInputTopic1Execution from './DataInputTopic1Execution.vue'
 
 import type { Topic1CorpusToolCatalogResult } from '@/types/topic1CorpusTools'
 import {
@@ -322,6 +327,12 @@ const executableCount = computed(
   color: #475467;
   font-size: 11px;
   font-weight: 600;
+}
+
+.topic1-tool-row__status .topic1-tool-row__service {
+  border-left: 2px solid #cbd9e8;
+  padding-left: 8px;
+  color: #425d78;
 }
 
 .topic1-tool-row__status > span.is-metadata_ready {
