@@ -36,15 +36,15 @@
     },
     "README.md": {
       "mode": "100644",
-      "sha256": "4edf18af7cab627d03939ea7926160e523b5dfddeafea11ee1185352ef59857d"
+      "sha256": "d253aacdd98bceafa71cad786e1e05a58c5d7b50a5ae14a318ad87cf99c9961d"
     },
     "RELEASE_FILES.md": {
       "mode": "100644",
-      "sha256": "954bc6ef728adf5656c013672fe2510d7c267dbe2478fc1d84f7802d4d3d5b5e"
+      "sha256": "242c39dfe342c07cbf362e84e7887802b60fbbdf793708aa3ce1ebe3e0516888"
     },
     "SOURCE_ALIGNMENT.json": {
       "mode": "100644",
-      "sha256": "2719863a5868acee8e294b293da14a5b4fc805508dd6c56cb665a102015ce043"
+      "sha256": "6494fa96c7eb869a79ecb0c3fc34ab20ebaae67bdb48f51cddbb1f5c804a59e5"
     },
     "THIRD_PARTY_NOTICES.md": {
       "mode": "100644",
@@ -68,7 +68,7 @@
     },
     "release_checks.json": {
       "mode": "100644",
-      "sha256": "2660d3df7e6a36eed2a27556e0456462ea1bdce6d0f1d960cfaac47a1a84fa98"
+      "sha256": "8c853670b739d1b49940f6ceb5be46a107f42a786ba29094149a5d09fe6b2841"
     },
     "scripts/autodl/README.md": {
       "mode": "100644",
@@ -101,6 +101,114 @@
     "scripts/autodl/services.sh": {
       "mode": "100644",
       "sha256": "702488b70ff5d5ccda57e99a7cfb9860b77afd9ce17c3b07663c40fb6c5431e7"
+    },
+    "scripts/cbrne/README.md": {
+      "mode": "100644",
+      "sha256": "600eab71f5f702cae96aa244e969aab1ccf00b4d822274a3c03a4d4462f00cb8"
+    },
+    "scripts/cbrne/build_dataset_snapshot_package.py": {
+      "mode": "100644",
+      "sha256": "5622b00faf49fa1a52bf656f6607bf059767c0d5af9cd11415afaad08c455952"
+    },
+    "scripts/cbrne/cbrne_package_lib.py": {
+      "mode": "100644",
+      "sha256": "a8cac8fc3c7b4644db5423d43347e9f3c3c22d390b6abbb3ed7aed74d83a4ef6"
+    },
+    "scripts/cbrne/normalize_topic2_seedbank.py": {
+      "mode": "100644",
+      "sha256": "65301dfd216cbf431d73786c5bb6c19a1e86b6fae9c21659db7e96c769fd4048"
+    },
+    "scripts/cbrne/verify_dataset_snapshot_package.py": {
+      "mode": "100644",
+      "sha256": "a6d24cab76a07d557805c5d7553c3e705ef9a58d145b94a9a65f2917a94bae00"
+    },
+    "scripts/gen-integration-ports.mjs": {
+      "mode": "100644",
+      "sha256": "ba6730e0773841935e00d66ed7f060d5dcdb4c58ed5899bee4a8a9b25888695d"
+    },
+    "scripts/import-topic1-value-qa-asset.mjs": {
+      "mode": "100644",
+      "sha256": "0e5efd1cd5fc60b478c1d51c2449a354d196548661a1c3e5fdb0994f65a83683"
+    },
+    "scripts/import-topic3-risk-v6.mjs": {
+      "mode": "100644",
+      "sha256": "8ca3898838f745442a745ac770913cbc70c2e4a7e846669d29b3e861726e255d"
+    },
+    "scripts/lib/benchmark-startup.mjs": {
+      "mode": "100644",
+      "sha256": "2bd2114898520eec88a07bf963c86abfb14c873945b5d0e8d10e4249d34d1cc4"
+    },
+    "scripts/lib/frontend-dependencies.mjs": {
+      "mode": "100644",
+      "sha256": "530f383f8f317525e4229154f0d5b4420490a48b9cf556cc8d56b1e6d3aa5f7a"
+    },
+    "scripts/lib/http-health.mjs": {
+      "mode": "100644",
+      "sha256": "4e839506242cfca5b057e078556ba9499f8d8531a3aab1bfb27721ed7acf10c7"
+    },
+    "scripts/lib/platform-args.mjs": {
+      "mode": "100644",
+      "sha256": "3499a852d0b3b5812bf7c887b6487d3d90a1dfc3d6ee18b7913c70372d861418"
+    },
+    "scripts/lib/process-lifecycle.mjs": {
+      "mode": "100644",
+      "sha256": "69de3a0d555f6bd94abbf7ac5811e34508c8943c54ce808f5dff8b399ff95532"
+    },
+    "scripts/lib/python-runtime.mjs": {
+      "mode": "100644",
+      "sha256": "c6f1db0304122c038d8153e9364ba5636ed5ab172469d2b5a78b6c50a78e4b60"
+    },
+    "scripts/lib/registered-system-start.mjs": {
+      "mode": "100644",
+      "sha256": "cae6902f2529328d9d09da1d361f96b347c8c7f745697188da88f789e782031b"
+    },
+    "scripts/lib/registry.mjs": {
+      "mode": "100644",
+      "sha256": "0abf5b09ab745a9e96b714e5b33604c7709220161cc43fd7b1284d19ba532283"
+    },
+    "scripts/lib/spawn-env.mjs": {
+      "mode": "100644",
+      "sha256": "0c21ec1a80ced3555212c21f440b4f7f6733aa0f5f93d5e83583aaa7b404a876"
+    },
+    "scripts/lib/system-start-spec.mjs": {
+      "mode": "100644",
+      "sha256": "20545586b2001e295b3573b4f1b41d00ef2fe5196fb7adfd3662218d7dee9658"
+    },
+    "scripts/lib/topic1-corpus-tools-start.mjs": {
+      "mode": "100644",
+      "sha256": "7128c64fdd80b4fc193554d3a6da011137aa36fd8dab18e662af20c199062326"
+    },
+    "scripts/lib/topic2-autobench-upstream.mjs": {
+      "mode": "100644",
+      "sha256": "677ba7ff647f642425ce1698bc6172cca2ecbf4111dc1c2635cdcb6a33cc1fdb"
+    },
+    "scripts/lib/topic2-filterguard-upstream.mjs": {
+      "mode": "100644",
+      "sha256": "c6c45e0a924b5e2b336d3e4bec8dd0637f700cfb1b7cb5d465ef6ee7bd9b71ca"
+    },
+    "scripts/lib/topic3-difficulty-runtime.mjs": {
+      "mode": "100644",
+      "sha256": "350d9079eb7dbb0d27c1349d777919b27bdde3493b142ae5eb938e4313465467"
+    },
+    "scripts/lib/topic4-input-workflow-upstream.mjs": {
+      "mode": "100644",
+      "sha256": "a42bd2ad593a75694e94a0151e00db469f0168a4fd0ab7ccf7b063015fadbc56"
+    },
+    "scripts/pack-topic4-static-lineage-asset.py": {
+      "mode": "100644",
+      "sha256": "622e94efdf98c5dd7db0cc90cd298f8210d449dd8c1d4b0bc9bf7fcad9160c0a"
+    },
+    "scripts/package-lock.json": {
+      "mode": "100644",
+      "sha256": "511f53515158cd0f02de7712a09a69e978f7c38a0e73e5425eeaff0d42f85f97"
+    },
+    "scripts/package.json": {
+      "mode": "100644",
+      "sha256": "df0783f6ef27d4183b95200d7752e69db973181c5039adb575957910eec11b4a"
+    },
+    "scripts/ports.mjs": {
+      "mode": "100644",
+      "sha256": "1ecd06014b7b8e285ea8c2b85bcbc9d7c9d86279d19f535810536933ce1facbe"
     },
     "scripts/server/README.md": {
       "mode": "100644",
@@ -149,6 +257,18 @@
     "scripts/server/topic3-qwen35-remote-runtime.sh": {
       "mode": "100644",
       "sha256": "c20ae9aff13165629da745f04ec883ad60577062240df226406f3ef70c6f9ae9"
+    },
+    "scripts/start-demo.mjs": {
+      "mode": "100644",
+      "sha256": "738f53045ba64f70a86983b3a201bf46ee0d593f6df12439f7bab0d178b1c3bc"
+    },
+    "scripts/start-platform.mjs": {
+      "mode": "100644",
+      "sha256": "70ab10064c4b6dc645cd5bc1740510c67193f3af50aa0952467bb9e6ee1aa7eb"
+    },
+    "scripts/verify-topic1-corpus-tools.py": {
+      "mode": "100644",
+      "sha256": "3b5aec44f767a41deaff1afa82ea15938318e5a66e66143a365fc05b68b6457c"
     },
     "tools/release_check.py": {
       "mode": "100644",
@@ -921,6 +1041,18 @@
     "web/backend/app/workers/governance_task_worker.py": {
       "mode": "100644",
       "sha256": "573fa3068b63489c8ccf30c44580a498da460832c053824a92d7c6a5d3bce82c"
+    },
+    "web/backend/data/input_guardrail_packs/demo-mixed-10.json": {
+      "mode": "100644",
+      "sha256": "042c065d3933a50dbaf7fda9b4e480aa77bc8746d33dc7e4286f1b65a7ce7a99"
+    },
+    "web/backend/data/output_guardrail_packs/demo-zh-8.json": {
+      "mode": "100644",
+      "sha256": "285b8e1ca18625f727ef0c1bc2d4c33a051a34df6aa31170ce55576a6badfc47"
+    },
+    "web/backend/data/topic1_tools/catalog.v1.json": {
+      "mode": "100644",
+      "sha256": "b3cb877517421c345a304141c04e7258754f218861b9d5505b932420e5d6d7f6"
     },
     "web/backend/pytest.ini": {
       "mode": "100644",
@@ -2234,5 +2366,5 @@
   "project": "NGAI-LLMSafeContent/Project_5_LLM_Content_Safety_Governance_Web",
   "schema": 1,
   "source_commit": "6bc46b61da700a2054520d8b4af65cfd8f63599e",
-  "whitelist_sha256": "66c93866ff716b3548e16af5ef05319349ca701bf81a61983f18aadbc28c834e"
+  "whitelist_sha256": "118ba8efa91ca08d05c1cb8cbeed1fac588a2032b475a93d049e59297eb97d3f"
 }

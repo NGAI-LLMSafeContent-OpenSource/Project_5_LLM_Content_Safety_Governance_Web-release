@@ -6,6 +6,40 @@
 
 ## 来自原仓、原样保留的文件
 
+- `scripts/cbrne/README.md`
+- `scripts/cbrne/build_dataset_snapshot_package.py`
+- `scripts/cbrne/cbrne_package_lib.py`
+- `scripts/cbrne/normalize_topic2_seedbank.py`
+- `scripts/cbrne/verify_dataset_snapshot_package.py`
+- `scripts/gen-integration-ports.mjs`
+- `scripts/import-topic1-value-qa-asset.mjs`
+- `scripts/import-topic3-risk-v6.mjs`
+- `scripts/lib/benchmark-startup.mjs`
+- `scripts/lib/frontend-dependencies.mjs`
+- `scripts/lib/http-health.mjs`
+- `scripts/lib/platform-args.mjs`
+- `scripts/lib/process-lifecycle.mjs`
+- `scripts/lib/python-runtime.mjs`
+- `scripts/lib/registered-system-start.mjs`
+- `scripts/lib/registry.mjs`
+- `scripts/lib/spawn-env.mjs`
+- `scripts/lib/system-start-spec.mjs`
+- `scripts/lib/topic1-corpus-tools-start.mjs`
+- `scripts/lib/topic2-autobench-upstream.mjs`
+- `scripts/lib/topic2-filterguard-upstream.mjs`
+- `scripts/lib/topic3-difficulty-runtime.mjs`
+- `scripts/lib/topic4-input-workflow-upstream.mjs`
+- `scripts/pack-topic4-static-lineage-asset.py`
+- `scripts/package-lock.json`
+- `scripts/package.json`
+- `scripts/ports.mjs`
+- `scripts/start-demo.mjs`
+- `scripts/start-platform.mjs`
+- `scripts/verify-topic1-corpus-tools.py`
+- `web/backend/data/input_guardrail_packs/demo-mixed-10.json`
+- `web/backend/data/output_guardrail_packs/demo-zh-8.json`
+- `web/backend/data/topic1_tools/catalog.v1.json`
+
 - `docs/guides/动态Benchmark-标准模式使用说明.md`
 
 - `.gitattributes`

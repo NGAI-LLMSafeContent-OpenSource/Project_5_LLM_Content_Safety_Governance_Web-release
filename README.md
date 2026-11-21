@@ -32,7 +32,9 @@ python -m pip install -r web/backend/requirements.txt
 cp web/backend/.env.example web/backend/.env
 # 编辑.env，填写自己的数据库、运行目录、服务地址与凭据
 (cd web/backend && python -m uvicorn app.main:app --host 127.0.0.1 --port 5800)
-# 另一个终端
+# 另一个终端：治理任务执行需要独立worker
+(cd web/backend && python -m app.workers.governance_task_worker)
+# 再一个终端
 pnpm --dir web/frontend install --frozen-lockfile
 pnpm --dir web/frontend build
 pnpm --dir web/frontend dev --host 127.0.0.1
@@ -40,7 +42,7 @@ pnpm --dir web/frontend dev --host 127.0.0.1
 
 ## 使用与输出
 
-打开 `http://127.0.0.1:5173`，后端 `/health` 验证健康。先准备所选课题的服务和资产，再从对应功能页发起任务并查看会话、归档或导出结果。部署入口见 `scripts/server/`，后端与前端各自README保留原运行说明。
+打开 `http://127.0.0.1:5173`，后端 `/health` 验证健康。先准备所选课题的服务和资产，再从对应功能页发起任务并查看会话、归档或导出结果。如需按原仓端口表启动整个平台及上游，先运行 `(cd scripts && npm ci)`，再执行 `node scripts/start-platform.mjs`；端口表为 `docs/integration/ports.registry.yaml`。按表中repo名称准备同级课题仓库，或配置自己的上游路径与地址；缺失模型/外部服务需先准备。资产导入与打包工具保留在 `scripts/`。服务器部署入口见 `scripts/server/`，后端与前端各自README保留原运行说明。
 
 ## 配置与外部依赖
 

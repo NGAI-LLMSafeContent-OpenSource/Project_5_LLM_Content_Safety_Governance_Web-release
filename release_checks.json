@@ -37,6 +37,35 @@
       "cwd": "web/frontend",
       "name": "frontend-build",
       "timeout": 360
+    },
+    {
+      "name": "scripts-dependencies",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "scripts",
+      "timeout": 240
+    },
+    {
+      "name": "integration-port-registry",
+      "argv": [
+        "node",
+        "scripts/ports.mjs",
+        "list"
+      ]
+    },
+    {
+      "name": "builtin-catalog-and-guardrail-packs",
+      "argv": [
+        "{python}",
+        "-c",
+        "from app.services.topic1_corpus_tool_service import load_topic1_corpus_tool_catalog;from app.services.input_guardrail_live_service import load_pack as a;from app.services.output_guardrail_live_service import load_pack as b;assert load_topic1_corpus_tool_catalog().tools;assert a('demo-mixed-10')['samples'];assert b('demo-zh-8')['samples']"
+      ],
+      "cwd": "web/backend"
     }
   ],
   "scope": "Pinned source byte/mode integrity, declared CPU/HTTP/frontend checks. Full model/GPU/data-dependent functionality is not implied. Upstream failures are preserved and separately documented.",

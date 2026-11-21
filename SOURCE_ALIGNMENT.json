@@ -52,6 +52,114 @@
       "git_blob": "01824fee3ba8c751daf6aea812943c66f1a376a4",
       "mode": "100644"
     },
+    "scripts/cbrne/README.md": {
+      "git_blob": "6dd5f8d20dce0ea57099da2fd9c5a0cf146b6036",
+      "mode": "100644"
+    },
+    "scripts/cbrne/build_dataset_snapshot_package.py": {
+      "git_blob": "f4fa7864a1de0415edf5457269d01e6def503185",
+      "mode": "100644"
+    },
+    "scripts/cbrne/cbrne_package_lib.py": {
+      "git_blob": "80dbd0c4bab6bf35f5a1193e678424557c0bf923",
+      "mode": "100644"
+    },
+    "scripts/cbrne/normalize_topic2_seedbank.py": {
+      "git_blob": "b959960da3e3675cce7033e52f194fc5be1f8bd6",
+      "mode": "100644"
+    },
+    "scripts/cbrne/verify_dataset_snapshot_package.py": {
+      "git_blob": "8cd1d5b2d7dbcdfbae2f8580f6f8c0afca0476da",
+      "mode": "100644"
+    },
+    "scripts/gen-integration-ports.mjs": {
+      "git_blob": "3bf9ff5038976886682a574e4f5ccdf850597a75",
+      "mode": "100644"
+    },
+    "scripts/import-topic1-value-qa-asset.mjs": {
+      "git_blob": "9cf00627b79d235ebd4cf9b67a4bcd88af8a277a",
+      "mode": "100644"
+    },
+    "scripts/import-topic3-risk-v6.mjs": {
+      "git_blob": "40dc30ba59dfd4d158a4a1871b49add2f21f7d76",
+      "mode": "100644"
+    },
+    "scripts/lib/benchmark-startup.mjs": {
+      "git_blob": "2a60717fea6f938cc735fb4e568421d0a748a2c9",
+      "mode": "100644"
+    },
+    "scripts/lib/frontend-dependencies.mjs": {
+      "git_blob": "b6f9b69c5636f544b972c05958754f320c63f0d5",
+      "mode": "100644"
+    },
+    "scripts/lib/http-health.mjs": {
+      "git_blob": "fd53f1575e609e7bd3c2b77ea8e1d7818a110e62",
+      "mode": "100644"
+    },
+    "scripts/lib/platform-args.mjs": {
+      "git_blob": "e3accfd4b1599cc8d955e76528b19158002db308",
+      "mode": "100644"
+    },
+    "scripts/lib/process-lifecycle.mjs": {
+      "git_blob": "e11b1fbc033e2b12799faaad2a87166a414ae2c3",
+      "mode": "100644"
+    },
+    "scripts/lib/python-runtime.mjs": {
+      "git_blob": "6e7113da732da0a7788f849a2c6978912c44e2cd",
+      "mode": "100644"
+    },
+    "scripts/lib/registered-system-start.mjs": {
+      "git_blob": "264adb14e9cbb2e3939d41aeb8f2bbf03b1e9b90",
+      "mode": "100644"
+    },
+    "scripts/lib/registry.mjs": {
+      "git_blob": "88ec6c2a5909d0b02e5120896425e72105bf803b",
+      "mode": "100644"
+    },
+    "scripts/lib/spawn-env.mjs": {
+      "git_blob": "afd880d649ad20edffeb4f473ce4b52d6151f8c0",
+      "mode": "100644"
+    },
+    "scripts/lib/system-start-spec.mjs": {
+      "git_blob": "71acd5174269bd6f83af48f0e5d36bf4cc87a202",
+      "mode": "100644"
+    },
+    "scripts/lib/topic1-corpus-tools-start.mjs": {
+      "git_blob": "f5d989e840726d7dd759248c7cdf2a3651a74842",
+      "mode": "100644"
+    },
+    "scripts/lib/topic2-autobench-upstream.mjs": {
+      "git_blob": "68398b0dd42eef2fa418f611bf6c8d3d6e4eeb5c",
+      "mode": "100644"
+    },
+    "scripts/lib/topic2-filterguard-upstream.mjs": {
+      "git_blob": "a21cb9b38181d6d82f2a9c60ee21c8cf445b3fd6",
+      "mode": "100644"
+    },
+    "scripts/lib/topic3-difficulty-runtime.mjs": {
+      "git_blob": "4f451019a05f09551c0c3bc9481914d48ac81bde",
+      "mode": "100644"
+    },
+    "scripts/lib/topic4-input-workflow-upstream.mjs": {
+      "git_blob": "60de01f8543f0d01f3fb6b10394dae351b877666",
+      "mode": "100644"
+    },
+    "scripts/pack-topic4-static-lineage-asset.py": {
+      "git_blob": "2c919f9b1eb0b1eecf66e608d12f9b70e8e554cb",
+      "mode": "100644"
+    },
+    "scripts/package-lock.json": {
+      "git_blob": "116a590adb13cbf954e6bcde12316c23f7a4fe4a",
+      "mode": "100644"
+    },
+    "scripts/package.json": {
+      "git_blob": "35ed171b55204d7463396fcefb8b63b9d6a5a52c",
+      "mode": "100644"
+    },
+    "scripts/ports.mjs": {
+      "git_blob": "655395b8b6a3361a7852b5e66bcc50c4a9c411b5",
+      "mode": "100644"
+    },
     "scripts/server/README.md": {
       "git_blob": "a81b16d5c458f0787f9adcc1c13e9c3cb21548e5",
       "mode": "100644"
@@ -98,6 +206,18 @@
     },
     "scripts/server/topic3-qwen35-remote-runtime.sh": {
       "git_blob": "6ca982f577297fe46fcfb80c2049ab3d49e37e4c",
+      "mode": "100644"
+    },
+    "scripts/start-demo.mjs": {
+      "git_blob": "638a377154b744eb50ec9957b9f8d8b70bd3175e",
+      "mode": "100644"
+    },
+    "scripts/start-platform.mjs": {
+      "git_blob": "7c12e6554a48b3e93f0c8637648339b83c783510",
+      "mode": "100644"
+    },
+    "scripts/verify-topic1-corpus-tools.py": {
+      "git_blob": "61a6d9c0ddd690452d7d42cb64b335a955537397",
       "mode": "100644"
     },
     "web/backend/.env.example": {
@@ -866,6 +986,18 @@
     },
     "web/backend/app/workers/governance_task_worker.py": {
       "git_blob": "6bce7d9a8215d8f229a85c1ba550d300dbb0a60d",
+      "mode": "100644"
+    },
+    "web/backend/data/input_guardrail_packs/demo-mixed-10.json": {
+      "git_blob": "4631aa9c23622796db9bd2f7a24c8b5aa2de930a",
+      "mode": "100644"
+    },
+    "web/backend/data/output_guardrail_packs/demo-zh-8.json": {
+      "git_blob": "39da376fa4d5b10df21959da092c4e27747f6499",
+      "mode": "100644"
+    },
+    "web/backend/data/topic1_tools/catalog.v1.json": {
+      "git_blob": "9fd88194717ed920495c57270d640a1a9b467557",
       "mode": "100644"
     },
     "web/backend/pytest.ini": {
