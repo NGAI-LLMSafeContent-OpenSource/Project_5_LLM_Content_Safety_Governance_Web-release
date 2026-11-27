@@ -18,6 +18,9 @@ errors=[]
 for path,meta in alignment['source_files'].items():
  if not (ROOT/path).is_file() or blob(tracked_bytes(path))!=meta['git_blob']:errors.append(path)
 assert not errors,'Files differ from the pinned original commit: '+str(errors[:8])
+for path,meta in alignment.get('authorized_address_redactions',{}).items():
+ assert (ROOT/path).is_file() and blob(tracked_bytes(path))==meta['release_git_blob'],'Authorized address redaction differs: '+path
+
 env={k:v for k,v in os.environ.items() if not k.startswith('GIT_') and not any(s in k.upper() for s in ['TOKEN','SECRET','PASSWORD','API_KEY']) and k not in ['PYTHONPATH','PYTHONHOME']}
 env.update(NO_PROXY='127.0.0.1,localhost,::1',no_proxy='127.0.0.1,localhost,::1',PYTHONDONTWRITEBYTECODE='1',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',GRADIO_ANALYTICS_ENABLED='False',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2')
 if env.get('HTTPS_PROXY') or env.get('https_proxy'):env.setdefault('npm_config_https_proxy',env.get('HTTPS_PROXY') or env.get('https_proxy'))

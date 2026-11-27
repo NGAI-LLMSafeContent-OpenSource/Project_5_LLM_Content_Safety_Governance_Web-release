@@ -1,5 +1,37 @@
 {
-  "policy": "Unmodified Git blob bytes for existing non-README runtime files; original defects retained. Release-only docs/configuration/examples are listed separately.",
+  "authorized_address_redactions": {
+    "scripts/server/README.md": {
+      "original_source_git_blob": "a81b16d5c458f0787f9adcc1c13e9c3cb21548e5",
+      "previous_release_git_blob": "a81b16d5c458f0787f9adcc1c13e9c3cb21548e5",
+      "reason": "User-authorized replacement of private deployment addresses with reserved example.invalid host placeholders; ports and paths preserved.",
+      "release_git_blob": "65260522ec6d7def89da489aa6be38eb00e44278"
+    },
+    "scripts/server/cloudflare-local-proxy.mjs": {
+      "original_source_git_blob": "4be1c7dcf73ae9068114a520b4cfaa2731b83fbc",
+      "previous_release_git_blob": "4be1c7dcf73ae9068114a520b4cfaa2731b83fbc",
+      "reason": "User-authorized replacement of private deployment addresses with reserved example.invalid host placeholders; ports and paths preserved.",
+      "release_git_blob": "2a7a400218e3eaab1184726c6f113d100e95a7a0"
+    },
+    "scripts/server/deploy-all.sh": {
+      "original_source_git_blob": "b389a004325a003b268d2198500b5115bf6877a4",
+      "previous_release_git_blob": "b389a004325a003b268d2198500b5115bf6877a4",
+      "reason": "User-authorized replacement of private deployment addresses with reserved example.invalid host placeholders; ports and paths preserved.",
+      "release_git_blob": "6de1c3edff240b94c76f7f3390ad98c085d97762"
+    },
+    "scripts/server/deploy.env.example": {
+      "original_source_git_blob": "10d143989665efdb9d681d4c7153aa88bf802491",
+      "previous_release_git_blob": "10d143989665efdb9d681d4c7153aa88bf802491",
+      "reason": "User-authorized replacement of private deployment addresses with reserved example.invalid host placeholders; ports and paths preserved.",
+      "release_git_blob": "f6eca3b56d7f0676c8a444131f8885ccea948f68"
+    },
+    "scripts/server/lib/common.sh": {
+      "original_source_git_blob": "b11a026bdb4a41478babccc4769c51125d5ada55",
+      "previous_release_git_blob": "b11a026bdb4a41478babccc4769c51125d5ada55",
+      "reason": "User-authorized replacement of private deployment addresses with reserved example.invalid host placeholders; ports and paths preserved.",
+      "release_git_blob": "81a8d8f69cdc18f9a7742d350d6e50705de696f8"
+    }
+  },
+  "policy": "source_files preserve original pinned Git bytes and modes. authorized_address_redactions explicitly record the approved address-only exceptions; no other business logic edits.",
   "project": "NGAI-LLMSafeContent/Project_5_LLM_Content_Safety_Governance_Web",
   "schema": 1,
   "source_commit": "6bc46b61da700a2054520d8b4af65cfd8f63599e",
@@ -160,10 +192,6 @@
       "git_blob": "655395b8b6a3361a7852b5e66bcc50c4a9c411b5",
       "mode": "100644"
     },
-    "scripts/server/README.md": {
-      "git_blob": "a81b16d5c458f0787f9adcc1c13e9c3cb21548e5",
-      "mode": "100644"
-    },
     "scripts/server/bootstrap.sh": {
       "git_blob": "4eed19d3b97f6e2cd0fed8684fa75b15b180365d",
       "mode": "100755"
@@ -172,24 +200,8 @@
       "git_blob": "711878e09da666c43b4101fe1a68d2aab1e897f1",
       "mode": "100755"
     },
-    "scripts/server/cloudflare-local-proxy.mjs": {
-      "git_blob": "4be1c7dcf73ae9068114a520b4cfaa2731b83fbc",
-      "mode": "100644"
-    },
-    "scripts/server/deploy-all.sh": {
-      "git_blob": "b389a004325a003b268d2198500b5115bf6877a4",
-      "mode": "100755"
-    },
-    "scripts/server/deploy.env.example": {
-      "git_blob": "10d143989665efdb9d681d4c7153aa88bf802491",
-      "mode": "100644"
-    },
     "scripts/server/env-check.sh": {
       "git_blob": "c2af63deb7f05d0668b99e5c4a5c3bfb7dc73a3a",
-      "mode": "100755"
-    },
-    "scripts/server/lib/common.sh": {
-      "git_blob": "b11a026bdb4a41478babccc4769c51125d5ada55",
       "mode": "100755"
     },
     "scripts/server/logs.sh": {

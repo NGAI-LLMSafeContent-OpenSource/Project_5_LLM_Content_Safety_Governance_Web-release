@@ -2,12 +2,12 @@
   "checks": {
     "commands": [
       [
-        "/data/fzk/env/published-runtime-audit/Project_5_LLM_Content_Safety_Governance_Web/bin/python",
-        "-B",
-        "tools/release_check.py"
+        "python3",
+        "tools/release_redaction_check.py"
       ]
     ],
-    "passed": true
+    "passed": true,
+    "scope": "Address-redaction update: complete inventory/hash/mode/provenance checks and targeted syntax/configuration tests. Not a new full real-model acceptance."
   },
   "files": {
     ".dockerignore": {
@@ -36,15 +36,15 @@
     },
     "README.md": {
       "mode": "100644",
-      "sha256": "d253aacdd98bceafa71cad786e1e05a58c5d7b50a5ae14a318ad87cf99c9961d"
+      "sha256": "1bebc69acbb177c8e0a133b83ad00dd683609fd28e66169e7efd3fcceb9c311d"
     },
     "RELEASE_FILES.md": {
       "mode": "100644",
-      "sha256": "242c39dfe342c07cbf362e84e7887802b60fbbdf793708aa3ce1ebe3e0516888"
+      "sha256": "2ecc3b9ff7f5fd5fc1a56d1fe20f7e94c02458d49622e4da4161b4299580cca2"
     },
     "SOURCE_ALIGNMENT.json": {
       "mode": "100644",
-      "sha256": "6494fa96c7eb869a79ecb0c3fc34ab20ebaae67bdb48f51cddbb1f5c804a59e5"
+      "sha256": "637f5635dee8051031cb64403c6b34c07e534fb03355e18141d722f8554d947e"
     },
     "THIRD_PARTY_NOTICES.md": {
       "mode": "100644",
@@ -212,7 +212,7 @@
     },
     "scripts/server/README.md": {
       "mode": "100644",
-      "sha256": "483dc39e4a6896656b74496efcc11f4049c9842285cf0c5bbc8cbc32227a704e"
+      "sha256": "a5c7ab51e8f2b7ebab17373dc8075d8f9208e8a026a5cfcfdcc346a053ed6c9e"
     },
     "scripts/server/bootstrap.sh": {
       "mode": "100755",
@@ -224,15 +224,15 @@
     },
     "scripts/server/cloudflare-local-proxy.mjs": {
       "mode": "100644",
-      "sha256": "dab623a1f886a2fe01ee33660b64e1e95338d9644c7c56f7d60494f28c0a3195"
+      "sha256": "bea68b0ed4649dab9ebd65c81672061bdf14b07b1d23e71bec80907081086b72"
     },
     "scripts/server/deploy-all.sh": {
       "mode": "100755",
-      "sha256": "520fbcae266a0356e2ba52b05c2d9b6e690b45f90410c383410b08d6dc3c20e0"
+      "sha256": "54c2534feedc3fb87502e175d12c618a0542b81989127dbedeed4bd20978b389"
     },
     "scripts/server/deploy.env.example": {
       "mode": "100644",
-      "sha256": "4e691b06cea10bcf4b72924368ea87df12377c28f51a4efead68156427d06533"
+      "sha256": "a46dded1180c1328290b1b3baa52713944ca19cc9f8b5989f2abb494bee72d71"
     },
     "scripts/server/env-check.sh": {
       "mode": "100755",
@@ -240,7 +240,7 @@
     },
     "scripts/server/lib/common.sh": {
       "mode": "100755",
-      "sha256": "88038493a6e87b90370388f6b4d4230b9e4c51003e3b09879896b133865ea182"
+      "sha256": "e7c19ede27f28f4bbaf21925c4ef0f03c05971a0dc6c4f615354b773877734e9"
     },
     "scripts/server/logs.sh": {
       "mode": "100755",
@@ -272,7 +272,11 @@
     },
     "tools/release_check.py": {
       "mode": "100644",
-      "sha256": "e6b38095cd478690cf2c78de557974ddf4f14a405d09b3a6521ac82e739bad12"
+      "sha256": "bc5e803a93f5456c4ba242a90b7d4b5fb40c56a666ba899277298b104d3d908b"
+    },
+    "tools/release_redaction_check.py": {
+      "mode": "100644",
+      "sha256": "239c41ab1f1b0cd0d0029b51177b07f577fdb804eedef040fa1854d8b2b768a6"
     },
     "web/backend/.env.example": {
       "mode": "100644",
@@ -2364,7 +2368,20 @@
     }
   },
   "project": "NGAI-LLMSafeContent/Project_5_LLM_Content_Safety_Governance_Web",
+  "redaction_update": {
+    "authorized": true,
+    "date": "2026-11-27",
+    "parent_release_commit": "92ddfba2dbdd47057b6da614e3f8257de8b7de44",
+    "paths": [
+      "scripts/server/README.md",
+      "scripts/server/cloudflare-local-proxy.mjs",
+      "scripts/server/deploy-all.sh",
+      "scripts/server/deploy.env.example",
+      "scripts/server/lib/common.sh"
+    ],
+    "placeholder_namespace": "example.invalid"
+  },
   "schema": 1,
   "source_commit": "6bc46b61da700a2054520d8b4af65cfd8f63599e",
-  "whitelist_sha256": "118ba8efa91ca08d05c1cb8cbeed1fac588a2032b475a93d049e59297eb97d3f"
+  "whitelist_sha256": "ddc2c1cc8150195fc008806b9b64b019009cfd670de9fbc9a5f9f03027157f18"
 }

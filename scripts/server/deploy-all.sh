@@ -199,7 +199,7 @@ sync_project5_backend_deploy_env() {
   local compliance_edit_base_url="${COMPLIANCE_EDIT_BASE_URL:-http://127.0.0.1:${TOPIC3_COMPLIANCE_PORT:-6311}}"
   local compliance_edit_timeout_seconds="${COMPLIANCE_EDIT_TIMEOUT_SECONDS:-300}"
   local proxy_url="${PROJECT5_BACKEND_PROXY_URL:-}"
-  local no_proxy="${PROJECT5_BACKEND_NO_PROXY:-127.0.0.1,localhost,10.184.17.176,10.184.17.178}"
+  local no_proxy="${PROJECT5_BACKEND_NO_PROXY:-127.0.0.1,localhost,platform.example.invalid,proxy.example.invalid}"
 
   log "Project 5 backend Benchmark upstream: ${benchmark_base_url}"
   log "Project 5 cultural corpus runs dir: ${cultural_corpus_runs_dir}"

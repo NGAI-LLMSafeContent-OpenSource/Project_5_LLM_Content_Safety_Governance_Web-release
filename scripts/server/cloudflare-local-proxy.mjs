@@ -6,7 +6,7 @@ import { URL } from "node:url";
 
 const listenHost = process.env.CF_LOCAL_PROXY_HOST ?? "127.0.0.1";
 const listenPort = Number.parseInt(process.env.CF_LOCAL_PROXY_PORT ?? "15173", 10);
-const targetUrl = new URL(process.env.CF_LOCAL_PROXY_TARGET ?? "http://10.184.17.176:5173");
+const targetUrl = new URL(process.env.CF_LOCAL_PROXY_TARGET ?? "http://platform.example.invalid:5173");
 
 if (targetUrl.protocol !== "http:") {
   throw new Error(`Only http targets are supported, got ${targetUrl.protocol}`);

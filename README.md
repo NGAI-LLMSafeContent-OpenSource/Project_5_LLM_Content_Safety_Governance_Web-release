@@ -75,3 +75,16 @@ python tools/release_check.py
 请通过 [公开仓Issues](https://github.com/NGAI-LLMSafeContent-OpenSource/Project_5_LLM_Content_Safety_Governance_Web-release/issues) 提交复现步骤、环境和日志摘要，勿附真实凭据或用户数据。代码问题由课题维护者在原开发仓处理，发布负责人同步审核后的版本；不要仅修一个平台造成分歧。
 
 自研代码采用[Apache-2.0](LICENSE)。模型、数据集、外部服务和第三方代码遵循各自许可与使用条件，见[第三方说明](THIRD_PARTY_NOTICES.md)。
+
+
+## 公开版本地址占位符
+
+本发布版本将原部署环境的内网 IP 替换为 `example.invalid` 下的保留示例域名，保留原端口和接口路径。部署前请通过项目现有环境变量或配置项填写自己的服务地址；这些域名不是可访问的线上服务。
+
+- `evaluation.example.invalid`：评价体系前端示例地址。
+- `model-api.example.invalid`、`llm-api.example.invalid`：模型 API 地址。
+- `platform.example.invalid`：治理平台或审计工作台地址。
+- `proxy.example.invalid`：代理地址。
+- `inference.example.invalid`：推理服务机器地址。
+
+本次仅经授权替换地址字符串及配套测试中的同一地址，未修改接口路径、端口或业务算法。具体例外及文件校验记录见 `SOURCE_ALIGNMENT.json`、`RELEASE_FILES.md` 和 `RELEASE_MANIFEST.json`。

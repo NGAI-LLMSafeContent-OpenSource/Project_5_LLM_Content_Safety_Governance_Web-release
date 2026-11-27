@@ -15,8 +15,8 @@ When the 176 server should call the online Topic 3 Benchmark service, set
 ```bash
 BENCHMARK_BASE_URL=https://u288206-6f2x-63496cc3.weste.seetacloud.com:8443
 OUTPUT_GUARDRAIL_DETECT_TIMEOUT_SECONDS=300
-PROJECT5_BACKEND_PROXY_URL=http://<user>:<password>@10.184.17.178:1080
-PROJECT5_BACKEND_NO_PROXY=127.0.0.1,localhost,10.184.17.176,10.184.17.178
+PROJECT5_BACKEND_PROXY_URL=http://<user>:<password>@proxy.example.invalid:1080
+PROJECT5_BACKEND_NO_PROXY=127.0.0.1,localhost,platform.example.invalid,proxy.example.invalid
 ```
 
 When using the local co-deployed Topic 3 Benchmark service, point the BFF back
@@ -172,7 +172,7 @@ covered by this BFF setting.
 ## Topic 3 Difficulty 182 remote router runtime
 
 For August demo style runs, keep Project 5 and the public entry on the 176
-server, and use `10.184.17.182` only as the GPU inference side:
+server, and use `inference.example.invalid` only as the GPU inference side:
 
 ```text
 Project 5 backend on 176
@@ -189,7 +189,7 @@ localhost-only access.
 
 ### 182 prerequisites
 
-On `10.184.17.182`, the expected default layout is:
+On `inference.example.invalid`, the expected default layout is:
 
 ```text
 /home/zx/repos/Project_5_LLM_Content_Safety_Governance_Web
@@ -310,7 +310,7 @@ ssh -N \
   -o ServerAliveCountMax=3 \
   -o ExitOnForwardFailure=yes \
   -L 6332:127.0.0.1:6332 \
-  zx@10.184.17.182
+  zx@inference.example.invalid
 ```
 
 Run it inside tmux on 176 if you use this temporary mode:
@@ -385,7 +385,7 @@ ssh -N \
   -o ServerAliveCountMax=3 \
   -o ExitOnForwardFailure=yes \
   -L 6332:127.0.0.1:6332 \
-  zx@10.184.17.182
+  zx@inference.example.invalid
 ```
 
 Create a second tmux window with `Ctrl+B C`, then run:
@@ -397,7 +397,7 @@ ssh -N \
   -o ServerAliveCountMax=3 \
   -o ExitOnForwardFailure=yes \
   -R 6332:127.0.0.1:6332 \
-  zx@10.184.17.176
+  zx@platform.example.invalid
 ```
 
 Detach with `Ctrl+B D`. Reattach with:
@@ -442,7 +442,7 @@ curl -fsS http://127.0.0.1:6332/v1/models
 Then open:
 
 ```text
-http://10.184.17.176:5173/benchmark
+http://platform.example.invalid:5173/benchmark
 ```
 
 Start `topic3-difficulty-generation` live_run.

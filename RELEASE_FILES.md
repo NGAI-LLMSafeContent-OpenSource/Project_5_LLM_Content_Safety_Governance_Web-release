@@ -2,10 +2,22 @@
 
 原仓：`NGAI-LLMSafeContent/Project_5_LLM_Content_Safety_Governance_Web`；源提交：`6bc46b61da700a2054520d8b4af65cfd8f63599e`；分支：`release/1.0`。
 
-本清单逐文件列出发布内容。原有非README实现/配置/资源保持Git对象字节和模式一致；README与发布新增材料单独登记。RELEASE_MANIFEST.json和SHA256SUMS由发布器生成，不形成自引用哈希。
+2026-11-27：按发布方授权将部署环境内网地址替换为保留示例域名。端口、接口路径和业务算法保持不变；配套测试同步替换。原始地址不在本清单中重复展示。
 
 ## 来自原仓、原样保留的文件
 
+- `.gitattributes`
+- `.gitignore`
+- `docs/guides/动态Benchmark-标准模式使用说明.md`
+- `docs/integration/ports.registry.yaml`
+- `scripts/autodl/README.md`
+- `scripts/autodl/bootstrap.sh`
+- `scripts/autodl/common.sh`
+- `scripts/autodl/deploy.env.example`
+- `scripts/autodl/difficulty-runtime.sh`
+- `scripts/autodl/gateway.conf.template`
+- `scripts/autodl/project5-gateway.mjs`
+- `scripts/autodl/services.sh`
 - `scripts/cbrne/README.md`
 - `scripts/cbrne/build_dataset_snapshot_package.py`
 - `scripts/cbrne/cbrne_package_lib.py`
@@ -33,38 +45,16 @@
 - `scripts/package-lock.json`
 - `scripts/package.json`
 - `scripts/ports.mjs`
-- `scripts/start-demo.mjs`
-- `scripts/start-platform.mjs`
-- `scripts/verify-topic1-corpus-tools.py`
-- `web/backend/data/input_guardrail_packs/demo-mixed-10.json`
-- `web/backend/data/output_guardrail_packs/demo-zh-8.json`
-- `web/backend/data/topic1_tools/catalog.v1.json`
-
-- `docs/guides/动态Benchmark-标准模式使用说明.md`
-
-- `.gitattributes`
-- `.gitignore`
-- `docs/integration/ports.registry.yaml`
-- `scripts/autodl/README.md`
-- `scripts/autodl/bootstrap.sh`
-- `scripts/autodl/common.sh`
-- `scripts/autodl/deploy.env.example`
-- `scripts/autodl/difficulty-runtime.sh`
-- `scripts/autodl/gateway.conf.template`
-- `scripts/autodl/project5-gateway.mjs`
-- `scripts/autodl/services.sh`
-- `scripts/server/README.md`
 - `scripts/server/bootstrap.sh`
 - `scripts/server/check-config.sh`
-- `scripts/server/cloudflare-local-proxy.mjs`
-- `scripts/server/deploy-all.sh`
-- `scripts/server/deploy.env.example`
 - `scripts/server/env-check.sh`
-- `scripts/server/lib/common.sh`
 - `scripts/server/logs.sh`
 - `scripts/server/probe-topic3-difficulty-vllm.sh`
 - `scripts/server/status-all.sh`
 - `scripts/server/topic3-qwen35-remote-runtime.sh`
+- `scripts/start-demo.mjs`
+- `scripts/start-platform.mjs`
+- `scripts/verify-topic1-corpus-tools.py`
 - `web/backend/.env.example`
 - `web/backend/README.md`
 - `web/backend/app/adapters/__init__.py`
@@ -257,6 +247,9 @@
 - `web/backend/app/topic2_showcase/static/styles.css`
 - `web/backend/app/workers/__init__.py`
 - `web/backend/app/workers/governance_task_worker.py`
+- `web/backend/data/input_guardrail_packs/demo-mixed-10.json`
+- `web/backend/data/output_guardrail_packs/demo-zh-8.json`
+- `web/backend/data/topic1_tools/catalog.v1.json`
 - `web/backend/pytest.ini`
 - `web/backend/requirements.txt`
 - `web/backend/scripts/package_topic3_risk_delivery.py`
@@ -585,7 +578,15 @@
 - `web/frontend/tsconfig.node.json`
 - `web/frontend/vite.config.ts`
 
-## README及发布新增材料
+## 经授权仅替换地址的原有文件
+
+- `scripts/server/README.md`
+- `scripts/server/cloudflare-local-proxy.mjs`
+- `scripts/server/deploy-all.sh`
+- `scripts/server/deploy.env.example`
+- `scripts/server/lib/common.sh`
+
+## 发布说明与验证支持文件
 
 - `.dockerignore`
 - `Dockerfile`
@@ -599,12 +600,9 @@
 - `deploy/serve.py`
 - `release_checks.json`
 - `tools/release_check.py`
+- `tools/release_redaction_check.py`
 
-## 生成的校验文件
+## 自动生成的完整性文件
 
 - `RELEASE_MANIFEST.json`
 - `SHA256SUMS`
-
-## 排除范围
-
-明确弃用的历史原型、旧版本快照、缓存、数据库、用户配置和预跑产物未发布。模型、原始数据/知识库和外部服务按README准备，不以缩减/改写同路径数据文件冒充完整交付。源码原有错误保留，见KNOWN_ISSUES.md。
